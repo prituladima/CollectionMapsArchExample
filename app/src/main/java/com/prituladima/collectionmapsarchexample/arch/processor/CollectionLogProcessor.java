@@ -2,6 +2,7 @@ package com.prituladima.collectionmapsarchexample.arch.processor;
 
 
 import com.prituladima.collectionmapsarchexample.Logger;
+import com.prituladima.collectionmapsarchexample.arch.exceptions.NoSuchOperationException;
 import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.operations.OperationRunnable;
 
@@ -84,7 +85,7 @@ public class CollectionLogProcessor implements CollectionProcessor<Long> {
             case REMOVE_FROM_MIDDLE: return removeFromMiddle();
             case REMOVE_FROM_TAIL: return removeFromTheTail();
             case SEARCH: return search();
-            default: throw new RuntimeException("No such operation");
+            default: throw new NoSuchOperationException();
         }
     }
 

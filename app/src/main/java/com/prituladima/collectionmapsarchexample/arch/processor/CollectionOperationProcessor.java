@@ -1,5 +1,7 @@
 package com.prituladima.collectionmapsarchexample.arch.processor;
 
+import com.prituladima.collectionmapsarchexample.arch.exceptions.NoSuchImplementationException;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,15 +9,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder.ListOperationEnumHolder.*;
 
-public class CollectionOperationProcessor implements CollectionProcessor<Integer>, Preparable {
+public class CollectionOperationProcessor implements
+        CollectionProcessor<Integer>,
+        ImplementationProvider<List<Integer>>,
+        PreparedDataProvider<List<Integer>> {
 
 
     private Implementation type;
     private Operation operation;
     private int amount = -1;
-    private List<Integer> prepared;
 
-    public CollectionOperationProcessor(Implementation type, Operation operation,  int amount) {
+    public CollectionOperationProcessor(Implementation type, Operation operation, int amount) {
         this.type = type;
         this.amount = amount;
     }
@@ -23,7 +27,7 @@ public class CollectionOperationProcessor implements CollectionProcessor<Integer
     @Override
     public Integer addInTheHead() {
         List<Integer> list = getImplementationPrototype();
-        for (int i = 0; i < getAmount(); i++) {
+        for (int i = 0; i < amount; i++) {
             list.add(0, i);
         }
         return amount;
@@ -32,7 +36,7 @@ public class CollectionOperationProcessor implements CollectionProcessor<Integer
     @Override
     public Integer addInTheTail() {
         List<Integer> list = getImplementationPrototype();
-        for (int i = 0; i < getAmount(); i++) {
+        for (int i = 0; i < amount; i++) {
             list.add(i);
         }
         return amount;
@@ -41,7 +45,7 @@ public class CollectionOperationProcessor implements CollectionProcessor<Integer
     @Override
     public Integer addInTheMiddle() {
         List<Integer> list = getImplementationPrototype();
-        for (int i = 0; i < getAmount(); i++) {
+        for (int i = 0; i < amount; i++) {
             list.add(list.size() / 2, i);
         }
         return amount;
@@ -49,8 +53,8 @@ public class CollectionOperationProcessor implements CollectionProcessor<Integer
 
     @Override
     public Integer removeFromTheHead() {
-        List<Integer> list = getPrepared();
-        for (int i = 0; i < getAmount(); i++) {
+        List<Integer> list = getPreparedData();
+        for (int i = 0; i < amount; i++) {
             list.remove(0);
         }
         return amount;
@@ -58,8 +62,8 @@ public class CollectionOperationProcessor implements CollectionProcessor<Integer
 
     @Override
     public Integer removeFromTheTail() {
-        List<Integer> list = getPrepared();
-        for (int i = 0; i < getAmount(); i++) {
+        List<Integer> list = getPreparedData();
+        for (int i = 0; i < amount; i++) {
             list.remove(list.size() - 1);
         }
         return amount;
@@ -68,8 +72,8 @@ public class CollectionOperationProcessor implements CollectionProcessor<Integer
     @Override
     public Integer removeFromMiddle() {
 
-        List<Integer> list = getPrepared();
-        for (int i = 0; i < getAmount(); i++) {
+        List<Integer> list = getPreparedData();
+        for (int i = 0; i < amount; i++) {
             list.remove(list.size() / 2);
         }
         return amount;
@@ -77,23 +81,24 @@ public class CollectionOperationProcessor implements CollectionProcessor<Integer
 
     @Override
     public Integer search() {
-        List<Integer> list = getPrepared();
-        for (int i = 0; i < getAmount(); i++) {
+        List<Integer> list = getPreparedData();
+        for (int i = 0; i < amount; i++) {
             list.indexOf(1);
         }
         return amount;
     }
 
     @Override
-    public void prepareData() {
-        prepared = null;
-        prepared = getImplementationPrototype();
+    public List<Integer> getPreparedData() {
+        List<Integer> prepared = getImplementationPrototype();
         for (int i = 0; i < prepared.size(); i++) {
             prepared.add(i);
         }
+        return prepared;
     }
 
-    private List<Integer> getImplementationPrototype() {
+    @Override
+    public List<Integer> getImplementationPrototype() {
         switch (type) {
             case ARRAY_LIST:
                 return new ArrayList<>();
@@ -102,21 +107,8 @@ public class CollectionOperationProcessor implements CollectionProcessor<Integer
             case COW_ARRAY_LIST:
                 return new CopyOnWriteArrayList<>();
             default:
-                throw new RuntimeException("No such implementation");
+                throw new NoSuchImplementationException();
         }
     }
 
-
-    private List<Integer> getPrepared() {
-        return prepared;
-    }
-
-    private Integer getAmount() {
-        return amount;
-    }
-
-    private long getNumberOfOperation() {
-        if (amount == -1) throw new RuntimeException("No amount to work with.");
-        return amount;
-    }
 }

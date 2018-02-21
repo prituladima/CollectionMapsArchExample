@@ -44,7 +44,7 @@ public final class CollectionTimeProcessor implements CollectionProcessor<Long>{
     @Override
     public Long removeFromTheHead() {
         CollectionOperationProcessor processor = getProcessor();
-        getProcessor().prepareData();
+        getProcessor().getPreparedData();
         long start = getNow();
         processor.removeFromTheHead();
         long finish = getNow();
@@ -54,7 +54,7 @@ public final class CollectionTimeProcessor implements CollectionProcessor<Long>{
     @Override
     public Long removeFromTheTail() {
         CollectionOperationProcessor processor = getProcessor();
-        getProcessor().prepareData();
+        getProcessor().getPreparedData();
         long start = getNow();
         processor.removeFromTheTail();
         long finish = getNow();
@@ -64,7 +64,7 @@ public final class CollectionTimeProcessor implements CollectionProcessor<Long>{
     @Override
     public Long removeFromMiddle() {
         CollectionOperationProcessor processor = getProcessor();
-        getProcessor().prepareData();
+        getProcessor().getPreparedData();
         long start = getNow();
         processor.removeFromMiddle();
         long finish = getNow();
@@ -74,7 +74,7 @@ public final class CollectionTimeProcessor implements CollectionProcessor<Long>{
     @Override
     public Long search() {
         CollectionOperationProcessor processor = getProcessor();
-        getProcessor().prepareData();
+        getProcessor().getPreparedData();
         long start = getNow();
         processor.search();
         long finish = getNow();

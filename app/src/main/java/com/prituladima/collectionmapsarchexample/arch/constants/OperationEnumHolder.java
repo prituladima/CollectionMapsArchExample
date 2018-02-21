@@ -5,30 +5,34 @@ public interface OperationEnumHolder {
     interface ListOperationEnumHolder {
 
         enum Implementation {
-            ARRAY_LIST(1),
-            LINKED_LIST(2),
-            COW_ARRAY_LIST(3);
+            ARRAY_LIST(1, "ArrayList"),
+            LINKED_LIST(2, "LinkedList"),
+            COW_ARRAY_LIST(3, "CopyOnWriteArrayList");
 
             int value;
+            String name;
 
-            Implementation(int value) {
+            Implementation(int value, String name) {
                 this.value = value;
+                this.name = name;
             }
         }
 
         enum Operation {
-            ADD_IN_THE_HEAD(1),
-            ADD_IN_THE_TAIL(2),
-            ADD_IN_THE_MIDDLE(3),
-            REMOVE_FROM_HEAD(4),
-            REMOVE_FROM_TAIL(5),
-            REMOVE_FROM_MIDDLE(6),
-            SEARCH(7);
+            ADD_IN_THE_HEAD(1, "Adding in the head"),
+            ADD_IN_THE_TAIL(2, "Adding in the tail"),
+            ADD_IN_THE_MIDDLE(3, "Adding in the middle"),
+            REMOVE_FROM_HEAD(4, "Removing from head"),
+            REMOVE_FROM_TAIL(5, "Removing from tail"),
+            REMOVE_FROM_MIDDLE(6, "Removing from middle"),
+            SEARCH(7, "Search by index");
 
             int value;
+            String description;
 
-            Operation(int value) {
+            Operation(int value, String description) {
                 this.value = value;
+                this.description = description;
             }
         }
 
