@@ -19,8 +19,8 @@ public interface CollectionScreenContractHolder {
     }
 
     interface CollectionScreenContract {
-        void startCalculationForAmount(int amount);
-        void stopCalculation();
+        void start(int amount, int threads);
+        void stop();
     }
 
 

@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">CollectionMapsArchExample</string>
+    <string name="app_name">CollectionsAndMaps</string>
+    <string name="text_tab1">Welcom to tab1</string>
+    <string name="text_tab2">Welcome to tab2</string>
+    <string name="button">Calculate</string>
+    <string name="hint">Number of operations. Default(40000)</string>
+    <string name="hint3">Number of operations. Default(600K)</string>
+    <string name="_0">0</string>
+    <string name="hint2">Number of threads. Default(2)</string>
 </resources>
