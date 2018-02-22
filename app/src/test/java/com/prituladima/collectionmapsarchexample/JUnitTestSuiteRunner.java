@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         OperationDataStorageTest.class,
-        OperationEnumHolderTest.class
+        OperationEnumHolderTest.class,
+        CollectionRepositoryTest.class
 })
 public class JUnitTestSuiteRunner {
 }

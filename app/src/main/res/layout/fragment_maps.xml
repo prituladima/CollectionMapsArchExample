@@ -73,7 +73,7 @@
             android:id="@+id/mapsNumbersOfThreads"
             android:layout_width="174dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint2"
+            android:hint="@string/hint_amount_of_threads"
             android:textSize="10sp" />
 
     </android.support.design.widget.TextInputLayout>

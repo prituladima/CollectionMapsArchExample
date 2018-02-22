@@ -16,9 +16,9 @@ public class Logger {
     private boolean isLogging = true;
 
     public void log(String message) {
-//        if (isLogging)
-//            Log.d(logTag, message);
-        System.out.println(message);
+        if (isLogging)
+            Log.d(logTag, message);
+//        System.out.println(message);
     }
 
     public void error(Throwable message) {

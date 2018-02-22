@@ -4,6 +4,8 @@ public interface OperationEnumHolder {
 
     interface ListOperationEnumHolder {
 
+        String LIST_NAME = "Collection";
+
         enum Implementation {
             ARRAY_LIST(1, "ArrayList"),
             LINKED_LIST(2, "LinkedList"),

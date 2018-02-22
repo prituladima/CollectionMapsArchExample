@@ -10,4 +10,6 @@ public interface Repository {
 
     List<CellDTO> get();
 
+    List<CellDTO> getDefault();
+
 }

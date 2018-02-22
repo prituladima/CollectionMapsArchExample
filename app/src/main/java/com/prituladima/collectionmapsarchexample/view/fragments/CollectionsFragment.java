@@ -9,12 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
 import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.presenter.Presenter;
 import com.prituladima.collectionmapsarchexample.impl.presenters.CollectionPresenters;
 
 import java.util.List;
@@ -31,13 +31,14 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
     RecyclerView collectionRecyclerView;
 
     @BindView(R.id.amount_of_operation_textview)
-    TextInputEditText amountText;
+    EditText amountText;
 
     @BindView(R.id.amount_of_par_threads_textview)
-    TextInputEditText threadsText;
+    EditText threadsText;
 
     @Inject
     CollectionPresenters presenter;
+
 
     CollectionsRecyclerViewAdapter collectionsRecyclerViewAdapter;
 
@@ -70,12 +71,14 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
 
     @OnClick(R.id.start_calculation)
     public void startCalculation() {
-
+        int amount = Integer.parseInt(amountText.getText().toString());
+        int threads = Integer.parseInt(threadsText.getText().toString());
+        presenter.start(amount, threads);
     }
 
     @Override
     public void onDataSetChanged(List<CellDTO> list) {
-
+        collectionsRecyclerViewAdapter.setData(list);
     }
 
     @Override

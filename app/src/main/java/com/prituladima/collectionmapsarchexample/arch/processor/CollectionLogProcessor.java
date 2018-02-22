@@ -24,6 +24,7 @@ public class CollectionLogProcessor implements CollectionProcessor<Long> {
     CollectionTimeProcessor processor;
     Operation operation;
 
+
     private CollectionLogProcessor(Implementation type, Operation operation, int amount) {
         this.processor = new CollectionTimeProcessor(type, operation, amount);
         this.operation = operation;

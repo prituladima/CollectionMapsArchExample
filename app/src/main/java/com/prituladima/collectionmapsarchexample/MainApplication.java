@@ -20,6 +20,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LOGGER.log("onCreate");
         injector = DaggerInjector
                 .builder()
                 .contextModule(new ContextModule(this))

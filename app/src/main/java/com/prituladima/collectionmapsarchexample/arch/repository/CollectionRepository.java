@@ -1,22 +1,41 @@
 package com.prituladima.collectionmapsarchexample.arch.repository;
 
+import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
-public class CollectionRepository implements Repository{
+import rx.subjects.PublishSubject;
 
-    private List<CellDTO> data = new ArrayList<>();
+public class CollectionRepository implements Repository {
+
+    private PublishSubject subject;
+    private List<CellDTO> data;
+
+    public CollectionRepository(PublishSubject subject) {
+        this.subject = subject;
+        data = getDefault();
+    }
 
     @Override
     public void put(int position, long time, boolean isLoading) {
-        data.add(position, new CellDTO(time, isLoading));
+        data.set(position, new CellDTO(time, isLoading));
+        subject.onNext(null);
     }
 
     @Override
     public List<CellDTO> get() {
-        return  data;
+        return new ArrayList<>(data);
+    }
+
+    //todo move in another class
+    @Override
+    public List<CellDTO> getDefault() {
+        List<CellDTO> list = new ArrayList<>();
+        for (int i = 0; i < OperationDataStorage.getInstance().getList().size(); i++) {
+            list.add(new CellDTO(0, false));
+        }
+        return list;
     }
 }
