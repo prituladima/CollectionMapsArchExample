@@ -25,4 +25,13 @@ public class OperationParamHolder {
     public int getPositionInStorage() {
         return positionInStorage;
     }
+
+    @Override
+    public String toString() {
+        return "OperationParamHolder{" +
+                "operationType=" + operationType +
+                ", implementation=" + implementation +
+                ", positionInStorage=" + positionInStorage +
+                '}';
+    }
 }

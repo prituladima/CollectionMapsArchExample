@@ -17,4 +17,12 @@ public final class CellDTO {
     public boolean isLoading() {
         return isLoading;
     }
+
+    @Override
+    public String toString() {
+        return "CellDTO{" +
+                "time=" + time +
+                ", isLoading=" + isLoading +
+                '}';
+    }
 }

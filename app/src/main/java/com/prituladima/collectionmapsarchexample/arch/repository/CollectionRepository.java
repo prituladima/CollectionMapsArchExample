@@ -8,6 +8,7 @@ import java.util.List;
 
 import rx.subjects.PublishSubject;
 
+
 public class CollectionRepository implements Repository {
 
     private PublishSubject subject;
@@ -19,7 +20,7 @@ public class CollectionRepository implements Repository {
     }
 
     @Override
-    public void put(int position, long time, boolean isLoading) {
+    public synchronized void put(int position, long time, boolean isLoading) {
         data.set(position, new CellDTO(time, isLoading));
         subject.onNext(null);
     }

@@ -1,9 +1,5 @@
 package com.prituladima.collectionmapsarchexample.dagger;
 
-import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
-
-import java.util.List;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 

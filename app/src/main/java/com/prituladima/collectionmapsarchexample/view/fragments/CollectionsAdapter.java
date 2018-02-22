@@ -1,7 +1,5 @@
 package com.prituladima.collectionmapsarchexample.view.fragments;
 
-import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<CollectionsRecyclerViewAdapter.ViewHolder> {
+public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.ViewHolder> {
 
 
     private List<CellDTO> data = new ArrayList<>();
@@ -33,13 +31,9 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
         notifyDataSetChanged();
     }
 
-    public CollectionsRecyclerViewAdapter(Context context) {
-        this.mInflater = LayoutInflater.from(context);
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_item_of_collections, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_of_collections, parent, false);
         return new ViewHolder(view);
     }
 

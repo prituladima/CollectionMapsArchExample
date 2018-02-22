@@ -2,7 +2,6 @@ package com.prituladima.collectionmapsarchexample.view.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class CollectionsFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
 
@@ -40,18 +40,19 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
     CollectionPresenters presenter;
 
 
-    CollectionsRecyclerViewAdapter collectionsRecyclerViewAdapter;
+    CollectionsAdapter adapter;
+    Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_collections, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         MainApplication.getInjector().inject(this);
 
         collectionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        collectionsRecyclerViewAdapter = new CollectionsRecyclerViewAdapter(getActivity());
-        collectionRecyclerView.setAdapter(collectionsRecyclerViewAdapter);
+        adapter = new CollectionsAdapter();
+        collectionRecyclerView.setAdapter(adapter);
 
         return rootView;
     }
@@ -69,6 +70,12 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
         super.onStop();
     }
 
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
+    }
+
     @OnClick(R.id.start_calculation)
     public void startCalculation() {
         int amount = Integer.parseInt(amountText.getText().toString());
@@ -78,7 +85,7 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
 
     @Override
     public void onDataSetChanged(List<CellDTO> list) {
-        collectionsRecyclerViewAdapter.setData(list);
+        adapter.setData(list);
     }
 
     @Override
