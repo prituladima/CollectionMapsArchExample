@@ -1,13 +1,11 @@
 package com.prituladima.collectionmapsarchexample.arch.repository;
 
-import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.subjects.PublishSubject;
-
 
 public class CollectionRepository implements Repository {
 
@@ -30,7 +28,6 @@ public class CollectionRepository implements Repository {
         return new ArrayList<>(data);
     }
 
-    //todo move in another class
     @Override
     public List<CellDTO> getDefault() {
         List<CellDTO> list = new ArrayList<>();
@@ -39,4 +36,10 @@ public class CollectionRepository implements Repository {
         }
         return list;
     }
+
+    @Override
+    public synchronized void reset() {
+        data = getDefault();
+    }
+
 }

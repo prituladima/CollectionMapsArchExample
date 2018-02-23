@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
@@ -20,12 +20,9 @@ import butterknife.ButterKnife;
 
 public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.ViewHolder> {
 
-
     private List<CellDTO> data = new ArrayList<>();
 
-    private LayoutInflater mInflater;
-
-    public void setData(List<CellDTO> listOfResult) {
+    public synchronized void setData(List<CellDTO> listOfResult) {
         data.clear();
         data.addAll(listOfResult);
         notifyDataSetChanged();
@@ -39,17 +36,20 @@ public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-            //String result = data.get(position). + data.get(position).getCount();
-            if (data.get(position).isLoading()) {
-                holder.progressBar.setVisibility(View.VISIBLE);
-                holder.myTextView.setVisibility(View.INVISIBLE);
-            } else {
-                holder.progressBar.setVisibility(View.INVISIBLE);
-                holder.myTextView.setVisibility(View.VISIBLE);
-                holder.myTextView.setText(String.valueOf(data.get(position).getTime()));
-            }
+        //String result = data.get(position). + data.get(position).getCount();
+        holder.myTextView.setText(String.valueOf(data.get(position).getTime()));
 
+        holder.progressBar.setVisibility(View.INVISIBLE);
+        holder.myTextView.setVisibility(View.INVISIBLE);
+        holder.collectionsError.setVisibility(View.INVISIBLE);
 
+        if (data.get(position).isLoading()) {
+            holder.progressBar.setVisibility(View.VISIBLE);
+        } else if(data.get(position).getTime() == -1) {
+            holder.collectionsError.setVisibility(View.VISIBLE);
+        }else {
+            holder.myTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -64,6 +64,9 @@ public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.
 
         @BindView(R.id.collectionsProgressBar)
         ProgressBar progressBar;
+
+        @BindView(R.id.collectionsError)
+        ImageView collectionsError;
 
         @BindView(R.id.progressConstraint)
         FrameLayout constraintLayout;

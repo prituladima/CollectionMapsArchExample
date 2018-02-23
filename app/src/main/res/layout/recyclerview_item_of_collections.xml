@@ -15,5 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"/>
+    <ImageView
+        android:id="@+id/collectionsError"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tint="#ff0000"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/stat_notify_error"/>
 
 </FrameLayout>

@@ -16,5 +16,7 @@ public interface CollectionProcessor<Result> extends Processor {
 
     Result search();
 
+    Result execute();
+
 
 }

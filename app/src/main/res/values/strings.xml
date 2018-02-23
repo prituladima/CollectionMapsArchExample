@@ -2,7 +2,9 @@
     <string name="app_name">CollectionsAndMaps</string>
     <string name="text_tab1">Welcom to tab1</string>
     <string name="text_tab2">Welcome to tab2</string>
-    <string name="button">Calculate</string>
+    <string name="start_text">Start</string>
+    <string name="stop_text">Stop</string>
+
     <string name="hint_amount_of_operation">Operations</string>
     <string name="hint3">Number of operations. Default(600K)</string>
     <string name="_0">0</string>

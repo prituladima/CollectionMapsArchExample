@@ -1,6 +1,7 @@
 package com.prituladima.collectionmapsarchexample.arch.processor;
 
 import com.prituladima.collectionmapsarchexample.arch.exceptions.NoSuchImplementationException;
+import com.prituladima.collectionmapsarchexample.arch.exceptions.NoSuchOperationException;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder.ListOperationEnumHolder.*;
 
 public class CollectionOperationProcessor implements
-        CollectionProcessor<Integer>,
+        CollectionProcessor<Long>,
         ImplementationProvider<List<Integer>>,
         PreparedDataProvider<List<Integer>> {
 
@@ -22,76 +23,95 @@ public class CollectionOperationProcessor implements
     public CollectionOperationProcessor(Implementation type, Operation operation, int amount) {
         this.type = type;
         this.amount = amount;
+        this.operation = operation;
     }
 
     @Override
-    public Integer addInTheHead() {
+    public Long addInTheHead() {
         List<Integer> list = getImplementationPrototype();
+        long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.add(0, i);
         }
-        return amount;
+        long finish = getNow();
+        return finish - start;
     }
 
     @Override
-    public Integer addInTheTail() {
+    public Long addInTheTail() {
         List<Integer> list = getImplementationPrototype();
+        long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.add(i);
         }
-        return amount;
+        long finish = getNow();
+        return finish - start;
     }
 
     @Override
-    public Integer addInTheMiddle() {
+    public Long addInTheMiddle() {
         List<Integer> list = getImplementationPrototype();
+        long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.add(list.size() / 2, i);
         }
-        return amount;
+        long finish = getNow();
+        return finish - start;
     }
 
     @Override
-    public Integer removeFromTheHead() {
+    public Long removeFromTheHead() {
         List<Integer> list = getPreparedData();
+        long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.remove(0);
         }
-        return amount;
+        long finish = getNow();
+        return finish - start;
     }
 
     @Override
-    public Integer removeFromTheTail() {
+    public Long removeFromTheTail() {
         List<Integer> list = getPreparedData();
+        long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.remove(list.size() - 1);
         }
-        return amount;
+        long finish = getNow();
+        return finish - start;
     }
 
     @Override
-    public Integer removeFromMiddle() {
+    public Long removeFromMiddle() {
 
         List<Integer> list = getPreparedData();
+        long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.remove(list.size() / 2);
         }
-        return amount;
+        long finish = getNow();
+        return finish - start;
     }
 
     @Override
-    public Integer search() {
+    public Long search() {
         List<Integer> list = getPreparedData();
+        long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.indexOf(1);
         }
-        return amount;
+        long finish = getNow();
+        return finish - start;
     }
+
+
+
+    ///////////TODO move to another implementation
 
     @Override
     public List<Integer> getPreparedData() {
         List<Integer> prepared = getImplementationPrototype();
-        for (int i = 0; i < prepared.size(); i++) {
+        for (int i = 0; i < amount; i++) {
             prepared.add(i);
         }
         return prepared;
@@ -109,6 +129,24 @@ public class CollectionOperationProcessor implements
             default:
                 throw new NoSuchImplementationException();
         }
+    }
+
+    public Long execute(){
+        switch (operation){
+            case ADD_IN_THE_HEAD: return addInTheHead();
+            case ADD_IN_THE_MIDDLE: return addInTheMiddle();
+            case ADD_IN_THE_TAIL: return addInTheTail();
+
+            case REMOVE_FROM_HEAD: return removeFromTheHead();
+            case REMOVE_FROM_MIDDLE: return removeFromMiddle();
+            case REMOVE_FROM_TAIL: return removeFromTheTail();
+            case SEARCH: return search();
+            default: throw new NoSuchOperationException();
+        }
+    }
+
+    private long getNow(){
+        return System.currentTimeMillis();
     }
 
 }

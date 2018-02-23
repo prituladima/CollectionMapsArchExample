@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.prituladima.collectionmapsarchexample.Logger;
 import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
@@ -26,6 +27,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class CollectionsFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
+
+    private static final Logger LOGGER = Logger.getLogger(CollectionsFragment.class);
 
     @BindView(R.id.collection_recycler_view)
     RecyclerView collectionRecyclerView;
@@ -83,8 +86,14 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
         presenter.start(amount, threads);
     }
 
+    @OnClick(R.id.stop_calculation)
+    public void stopCalculation() {
+        presenter.stop();
+    }
+
     @Override
     public void onDataSetChanged(List<CellDTO> list) {
+        LOGGER.log(list.toString());
         adapter.setData(list);
     }
 

@@ -12,4 +12,6 @@ public interface Repository {
 
     List<CellDTO> getDefault();
 
+    void reset();
+
 }

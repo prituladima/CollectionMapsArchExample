@@ -1,7 +1,5 @@
 package com.prituladima.collectionmapsarchexample.impl.presenters;
 
-import android.os.Looper;
-
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
 import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.operations.OperationRunnable;
@@ -11,13 +9,11 @@ import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Handler;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -44,7 +40,9 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
     @Override
     public void attachView(CollectionScreenContractHolder.CollectionView mvpView) {
         super.attachView(mvpView);
-        subscription = subject.buffer(21).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+        subscription = subject
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this);
         getMvpView().onDataSetChanged(repository.get());
     }
 
@@ -59,9 +57,10 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
     @Override
     public void start(int amount, int threads) {
         service = Executors.newFixedThreadPool(threads);
-
+        repository.reset();
+        getMvpView().onDataSetChanged(repository.get());
         for (OperationParamHolder holder : OperationDataStorage.getInstance().getList()) {
-            service.submit(new OperationRunnable(holder, amount));
+            service.submit(new OperationRunnable(holder, amount, repository));
         }
 
         service.shutdown();
@@ -74,10 +73,7 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
 
     @Override
     public void call(Object ignore) {
-        //todo test this one
         if (getMvpView() != null)
             getMvpView().onDataSetChanged(repository.get());
-
-
     }
 }
