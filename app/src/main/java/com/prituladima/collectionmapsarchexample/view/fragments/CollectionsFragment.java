@@ -16,6 +16,7 @@ import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
 import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
+import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.impl.presenters.CollectionPresenters;
 
 import java.util.List;
@@ -43,6 +44,9 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
     @Inject
     CollectionPresenters presenter;
 
+    @Inject
+    OperationDataStorage storage;
+
 
     CollectionsAdapter adapter;
     Unbinder unbinder;
@@ -52,10 +56,10 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
 
         View rootView = inflater.inflate(R.layout.fragment_collections, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        MainApplication.getInjector().inject(this);
+        ((MainApplication)getActivity().getApplication()).getApplicationInjector().inject(this);
 
         collectionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        adapter = new CollectionsAdapter();
+        adapter = new CollectionsAdapter(storage);
         collectionRecyclerView.setAdapter(adapter);
 
         return rootView;

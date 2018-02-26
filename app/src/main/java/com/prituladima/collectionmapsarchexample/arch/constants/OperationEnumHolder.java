@@ -18,6 +18,14 @@ public interface OperationEnumHolder {
                 this.value = value;
                 this.name = name;
             }
+
+            public int getValue() {
+                return value;
+            }
+
+            public String getName() {
+                return name;
+            }
         }
 
         enum Operation {
@@ -34,6 +42,22 @@ public interface OperationEnumHolder {
 
             Operation(int value, String description) {
                 this.value = value;
+                this.description = description;
+            }
+
+            public int getValue() {
+                return value;
+            }
+
+            public void setValue(int value) {
+                this.value = value;
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            public void setDescription(String description) {
                 this.description = description;
             }
         }

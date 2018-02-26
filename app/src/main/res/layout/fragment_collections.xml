@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/hint_amount_of_operation"
-            android:inputType="number" />
+            android:inputType="number"
+            android:text="50000"/>
 
         <EditText
             android:id="@+id/amount_of_par_threads_textview"
@@ -24,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/hint_amount_of_threads"
-            android:inputType="number" />
+            android:inputType="number"
+            android:text="4"/>
 
         <Button
             android:id="@+id/start_calculation"

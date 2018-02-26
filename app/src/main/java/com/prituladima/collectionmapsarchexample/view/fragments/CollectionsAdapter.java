@@ -4,13 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
+import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,12 @@ import butterknife.ButterKnife;
 
 public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.ViewHolder> {
 
+    private OperationDataStorage storage;
     private List<CellDTO> data = new ArrayList<>();
+
+    public CollectionsAdapter(OperationDataStorage storage) {
+        this.storage = storage;
+    }
 
     public synchronized void setData(List<CellDTO> listOfResult) {
         data.clear();
@@ -36,7 +42,10 @@ public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        //String result = data.get(position). + data.get(position).getCount();
+        String impl  = storage.getList().get(position).getImplementation().getName();
+        String oper = storage.getList().get(position).getOperationType().getDescription();
+
+        holder.labelText.setText(impl + "\n" + oper);
         holder.myTextView.setText(String.valueOf(data.get(position).getTime()));
 
         holder.progressBar.setVisibility(View.INVISIBLE);
@@ -59,6 +68,9 @@ public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.labelText)
+        TextView labelText;
+
         @BindView(R.id.collectionsText)
         TextView myTextView;
 
@@ -69,7 +81,7 @@ public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.
         ImageView collectionsError;
 
         @BindView(R.id.progressConstraint)
-        FrameLayout constraintLayout;
+        LinearLayout constraintLayout;
 
         ViewHolder(View itemView) {
             super(itemView);
