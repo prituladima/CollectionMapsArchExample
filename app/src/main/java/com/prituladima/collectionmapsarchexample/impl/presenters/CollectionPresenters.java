@@ -1,5 +1,8 @@
 package com.prituladima.collectionmapsarchexample.impl.presenters;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
 import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.operations.OperationRunnable;
@@ -40,9 +43,7 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
     @Override
     public void attachView(CollectionScreenContractHolder.CollectionView mvpView) {
         super.attachView(mvpView);
-        subscription = subject
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this);
+        subscription = subject.subscribe(this);
         getMvpView().onDataSetChanged(repository.get());
     }
 
@@ -73,7 +74,11 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
 
     @Override
     public void call(Object ignore) {
-        if (getMvpView() != null)
-            getMvpView().onDataSetChanged(repository.get());
+        new Handler(Looper.getMainLooper()).post(() ->
+                {
+                    if (getMvpView() != null)
+                        getMvpView().onDataSetChanged(repository.get());
+                }
+        );
     }
 }

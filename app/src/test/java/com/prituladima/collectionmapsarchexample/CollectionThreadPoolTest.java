@@ -31,6 +31,7 @@ public class CollectionThreadPoolTest {
     private PublishSubject subject;
     private CollectionRepository repository;
     private CountDownLatch countDownLatch;
+    private List<OperationParamHolder> holders;
 
     @Before
     public void init(){
@@ -38,11 +39,11 @@ public class CollectionThreadPoolTest {
         subject = PublishSubject.create();
         repository = new CollectionRepository(subject);
         countDownLatch = new CountDownLatch(EXPECTED_SIZE);
+        holders = OperationDataStorage.getInstance().getList();
     }
 
     @Test
     public void threadPoolTest() throws InterruptedException{
-        List<OperationParamHolder> holders = OperationDataStorage.getInstance().getList();
 
         assertEquals(EXPECTED_SIZE, holders.size());
 
@@ -55,13 +56,11 @@ public class CollectionThreadPoolTest {
 
         for (int i = 0; i < EXPECTED_SIZE; i++) {
             CellDTO cell = repository.get().get(i);
-            System.out.println(" --- " + cell);
+            OperationParamHolder holder = holders.get(i);
+            System.out.println(" --- " + cell + " --- " + holder);
             assertTrue(cell.getTime() >= 0);
             assertFalse(cell.isLoading());
         }
-
-//        List<CellDTO> list
-
 
     }
 

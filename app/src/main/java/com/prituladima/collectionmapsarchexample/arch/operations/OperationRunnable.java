@@ -1,6 +1,7 @@
 package com.prituladima.collectionmapsarchexample.arch.operations;
 
 import com.prituladima.collectionmapsarchexample.Logger;
+import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
 import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.processor.CollectionOperationProcessor;
 import com.prituladima.collectionmapsarchexample.arch.processor.CollectionProcessor;
@@ -36,9 +37,11 @@ public class OperationRunnable implements Runnable {
             time = processor.execute();
             repository.put(holder.getPositionInStorage(), time, false);
         }catch (Throwable throwable){
-            repository.put(holder.getPositionInStorage(), -1, false);
+            time = -1L;
+            repository.put(holder.getPositionInStorage(), time, false);
             System.out.println(throwable);
         } finally {
+            LOGGER.log(" --- " + new CellDTO(time, false)  + " --- " + holder);
             if (countDownLatch != null) {
                 countDownLatch.countDown();
             }
