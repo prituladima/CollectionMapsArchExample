@@ -1,6 +1,6 @@
-package com.prituladima.collectionmapsarchexample;
+package com.prituladima.collectionmapsarchexample.collection;
 
-import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class OperationDataStorageTest {
 
     @Before
     public void init(){
-        storage = OperationDataStorage.getInstance();
+        storage = new OperationDataStorage();
     }
 
     @Test

@@ -1,17 +1,15 @@
 package com.prituladima.collectionmapsarchexample.arch.processor;
 
-public interface CollectionProcessor<Result> extends Processor {
+public interface CollectionProcessor extends Processor {
 
-    Result addInTheHead();
-    Result addInTheTail();
-    Result addInTheMiddle();
+    long addInTheHead();
+    long addInTheTail();
+    long addInTheMiddle();
 
-    Result removeFromTheHead();
-    Result removeFromTheTail();
-    Result removeFromMiddle();
+    long removeFromTheHead();
+    long removeFromTheTail();
+    long removeFromMiddle();
 
-    Result search();
-
-    Result execute();
+    long search();
 
 }

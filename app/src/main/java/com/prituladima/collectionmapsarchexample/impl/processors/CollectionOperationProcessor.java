@@ -1,33 +1,37 @@
-package com.prituladima.collectionmapsarchexample.arch.processor;
+package com.prituladima.collectionmapsarchexample.impl.processors;
 
 import com.prituladima.collectionmapsarchexample.arch.exceptions.NoSuchImplementationException;
 import com.prituladima.collectionmapsarchexample.arch.exceptions.NoSuchOperationException;
+import com.prituladima.collectionmapsarchexample.arch.processor.CollectionProcessor;
+import com.prituladima.collectionmapsarchexample.arch.processor.ImplementationProvider;
+import com.prituladima.collectionmapsarchexample.arch.processor.PreparedDataProvider;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static com.prituladima.collectionmapsarchexample.TimeUtil.getNow;
 import static com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder.ListOperationEnumHolder.*;
 
 public class CollectionOperationProcessor implements
-        CollectionProcessor<Long>,
+        CollectionProcessor,
         ImplementationProvider<List<Integer>>,
         PreparedDataProvider<List<Integer>> {
 
 
-    private Implementation type;
-    private Operation operation;
+    private ListImplementation type;
+    private ListOperation operation;
     private int amount = -1;
 
-    public CollectionOperationProcessor(Implementation type, Operation operation, int amount) {
+    public CollectionOperationProcessor(ListImplementation type, ListOperation operation, int amount) {
         this.type = type;
         this.amount = amount;
         this.operation = operation;
     }
 
     @Override
-    public Long addInTheHead() {
+    public long addInTheHead() {
         List<Integer> list = getImplementationPrototype();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
@@ -38,7 +42,7 @@ public class CollectionOperationProcessor implements
     }
 
     @Override
-    public Long addInTheTail() {
+    public long addInTheTail() {
         List<Integer> list = getImplementationPrototype();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
@@ -49,7 +53,7 @@ public class CollectionOperationProcessor implements
     }
 
     @Override
-    public Long addInTheMiddle() {
+    public long addInTheMiddle() {
         List<Integer> list = getImplementationPrototype();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
@@ -60,7 +64,7 @@ public class CollectionOperationProcessor implements
     }
 
     @Override
-    public Long removeFromTheHead() {
+    public long removeFromTheHead() {
         List<Integer> list = getPreparedData();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
@@ -71,7 +75,7 @@ public class CollectionOperationProcessor implements
     }
 
     @Override
-    public Long removeFromTheTail() {
+    public long removeFromTheTail() {
         List<Integer> list = getPreparedData();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
@@ -82,7 +86,7 @@ public class CollectionOperationProcessor implements
     }
 
     @Override
-    public Long removeFromMiddle() {
+    public long removeFromMiddle() {
 
         List<Integer> list = getPreparedData();
         long start = getNow();
@@ -94,7 +98,7 @@ public class CollectionOperationProcessor implements
     }
 
     @Override
-    public Long search() {
+    public long search() {
         List<Integer> list = getPreparedData();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
@@ -131,7 +135,8 @@ public class CollectionOperationProcessor implements
         }
     }
 
-    public Long execute(){
+    @Override
+    public long execute(){
         switch (operation){
             case ADD_IN_THE_HEAD: return addInTheHead();
             case ADD_IN_THE_MIDDLE: return addInTheMiddle();
@@ -143,10 +148,6 @@ public class CollectionOperationProcessor implements
             case SEARCH: return search();
             default: throw new NoSuchOperationException();
         }
-    }
-
-    private long getNow(){
-        return System.currentTimeMillis();
     }
 
 }

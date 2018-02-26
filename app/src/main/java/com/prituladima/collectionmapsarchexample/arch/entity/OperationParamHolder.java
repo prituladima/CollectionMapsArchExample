@@ -1,24 +1,24 @@
-package com.prituladima.collectionmapsarchexample.arch.dto;
+package com.prituladima.collectionmapsarchexample.arch.entity;
 
 import static com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder.ListOperationEnumHolder.*;
 
 public class OperationParamHolder {
 
-    private Operation operationType;
-    private Implementation implementation;
+    private ListOperation operationType;
+    private ListImplementation implementation;
     private int positionInStorage;
 
-    public OperationParamHolder(Operation operationType, Implementation implementation, int positionInStorage) {
+    public OperationParamHolder(ListOperation operationType, ListImplementation implementation, int positionInStorage) {
         this.operationType = operationType;
         this.implementation = implementation;
         this.positionInStorage = positionInStorage;
     }
 
-    public Operation getOperationType() {
+    public ListOperation getOperationType() {
         return operationType;
     }
 
-    public Implementation getImplementation() {
+    public ListImplementation getImplementation() {
         return implementation;
     }
 

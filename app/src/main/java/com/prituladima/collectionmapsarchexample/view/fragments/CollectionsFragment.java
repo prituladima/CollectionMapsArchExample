@@ -15,9 +15,10 @@ import com.prituladima.collectionmapsarchexample.Logger;
 import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
-import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.impl.presenters.CollectionPresenters;
+import com.prituladima.collectionmapsarchexample.view.fragments.adapters.CollectionsAdapter;
 
 import java.util.List;
 
@@ -104,17 +105,12 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
 
     @Override
     public void onDataIsStillLoadingError() {
-        Toast.makeText(getActivity(), "Operation is still running!", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onCalculationCanceled() {
-
+        Toast.makeText(getActivity(), "ListOperation is still running!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onCalculationFinished() {
-
+        Toast.makeText(getActivity(), "Calculation finished!", Toast.LENGTH_SHORT).show();
     }
 }
 

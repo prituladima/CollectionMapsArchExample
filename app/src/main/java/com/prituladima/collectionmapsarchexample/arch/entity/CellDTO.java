@@ -1,4 +1,4 @@
-package com.prituladima.collectionmapsarchexample.arch.dto;
+package com.prituladima.collectionmapsarchexample.arch.entity;
 
 public final class CellDTO {
 

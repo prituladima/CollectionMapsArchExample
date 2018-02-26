@@ -1,6 +1,6 @@
 package com.prituladima.collectionmapsarchexample.dagger;
 
-import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 
 import javax.inject.Singleton;
 
@@ -13,7 +13,7 @@ public class OperationDataStorageModule {
     @Singleton
     @Provides
     public OperationDataStorage provideOperationDataStorage(){
-        return OperationDataStorage.getInstance();
+        return new OperationDataStorage();
     }
 
 }

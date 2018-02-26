@@ -1,11 +1,9 @@
-package com.prituladima.collectionmapsarchexample;
+package com.prituladima.collectionmapsarchexample.collection;
 
 
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
-import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
-import com.prituladima.collectionmapsarchexample.dagger.ContextModule;
-import com.prituladima.collectionmapsarchexample.dagger.DaggerInjector;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,11 +20,13 @@ public class CollectionRepositoryTest {
 
     private Repository repository;
     private PublishSubject publishSubject;
+    private OperationDataStorage storage;
 
     @Before
     public void init(){
         publishSubject = PublishSubject.create();
-        repository = new CollectionRepository(publishSubject);
+        storage  = new OperationDataStorage();
+        repository = new CollectionRepository(publishSubject, storage);
     }
 
     @Test

@@ -1,8 +1,5 @@
-package com.prituladima.collectionmapsarchexample;
+package com.prituladima.collectionmapsarchexample.collection;
 
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder;
-
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -16,12 +13,12 @@ public class OperationEnumHolderTest {
 
     @Test
     public void amountOfOperation(){
-        assertEquals(EXPECTED_AMOUNT_OF_OPERATION, Operation.values().length);
+        assertEquals(EXPECTED_AMOUNT_OF_OPERATION, ListOperation.values().length);
     }
 
     @Test
     public void amountOfImplementation(){
-        assertEquals(EXPECTED_AMOUNT_OF_IMPLEMENTATION, Implementation.values().length);
+        assertEquals(EXPECTED_AMOUNT_OF_IMPLEMENTATION, ListImplementation.values().length);
     }
 
 }

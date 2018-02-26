@@ -4,16 +4,13 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
-import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.operations.OperationExecutor;
-import com.prituladima.collectionmapsarchexample.arch.operations.OperationRunnable;
 import com.prituladima.collectionmapsarchexample.arch.presenter.BasePresenter;
-import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,10 +24,10 @@ import static com.prituladima.collectionmapsarchexample.arch.constants.Operation
 
 @Singleton
 public class CollectionPresenters extends BasePresenter<CollectionScreenContractHolder.CollectionView>
-        implements CollectionScreenContractHolder.CollectionScreenContract, Action1 {
+        implements CollectionScreenContractHolder.CollectionScreenContract, Action1<Boolean> {
 
     private Repository repository;
-    private PublishSubject subject;
+    private PublishSubject<Boolean> subject;
     private Subscription subscription;
     private ExecutorService service;
     private OperationDataStorage storage;
@@ -39,7 +36,7 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
 
     @Inject
     public CollectionPresenters(@Named(LIST_NAME) Repository repository,
-                                @Named(LIST_NAME) PublishSubject subject,
+                                @Named(LIST_NAME) PublishSubject<Boolean> subject,
                                 OperationDataStorage storage) {
         this.repository = repository;
         this.subject = subject;
@@ -79,11 +76,13 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
     }
 
     @Override
-    public void call(Object ignore) {
+    public void call(Boolean isLast) {
         new Handler(Looper.getMainLooper()).post(() ->
                 {
                     if (getMvpView() != null)
                         getMvpView().onDataSetChanged(repository.get());
+                    if (isLast)
+                        getMvpView().onCalculationFinished();
                 }
         );
     }

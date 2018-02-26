@@ -15,7 +15,7 @@ public class EventbusModule {
     @Singleton
     @Provides
     @Named(LIST_NAME)
-    public PublishSubject providesCollectionPublishSubject(){
+    public PublishSubject<Boolean> providesCollectionPublishSubject(){
         return PublishSubject.create();
     }
 

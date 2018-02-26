@@ -1,4 +1,4 @@
-package com.prituladima.collectionmapsarchexample.view.fragments;
+package com.prituladima.collectionmapsarchexample.view.fragments.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.prituladima.collectionmapsarchexample.R;
-import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,8 @@ public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String impl  = storage.getList().get(position).getImplementation().getName();
-        String oper = storage.getList().get(position).getOperationType().getDescription();
+        String impl  = storage.getList().get(position).getImplementation().getImplementation();
+        String oper = storage.getList().get(position).getOperationType().getOperation();
 
         holder.labelText.setText(impl + "\n" + oper);
         holder.myTextView.setText(String.valueOf(data.get(position).getTime()));

@@ -1,9 +1,9 @@
 package com.prituladima.collectionmapsarchexample.arch.operations;
 
 import com.prituladima.collectionmapsarchexample.Logger;
-import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
-import com.prituladima.collectionmapsarchexample.arch.processor.CollectionOperationProcessor;
+import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolder;
+import com.prituladima.collectionmapsarchexample.impl.processors.CollectionOperationProcessor;
 import com.prituladima.collectionmapsarchexample.arch.processor.CollectionProcessor;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
@@ -24,26 +24,24 @@ public class OperationRunnable implements Runnable {
         this.countDownLatch = countDownLatch;
     }
 
-    public OperationRunnable(OperationParamHolder holder, int amount, Repository repository) {
-        this(holder, amount, repository, null);
-    }
-
     @Override
     public void run() {
         Long time = 0L;
         try {
-            repository.put(holder.getPositionInStorage(), time, true);
-            CollectionProcessor<Long> processor = new CollectionOperationProcessor(holder.getImplementation(), holder.getOperationType(), amount);
+            repository.put(holder.getPositionInStorage(), time, true, false);
+            //todo move initialization inn another class
+            CollectionProcessor processor = new CollectionOperationProcessor(holder.getImplementation(), holder.getOperationType(), amount);
             time = processor.execute();
-            repository.put(holder.getPositionInStorage(), time, false);
+            repository.put(holder.getPositionInStorage(), time, false, false);
         }catch (Throwable throwable){
             time = -1L;
-            repository.put(holder.getPositionInStorage(), time, false);
+            repository.put(holder.getPositionInStorage(), time, false, false);
             System.out.println(throwable);
         } finally {
             LOGGER.log(" --- " + new CellDTO(time, false)  + " --- " + holder);
-            if (countDownLatch != null) {
-                countDownLatch.countDown();
+            countDownLatch.countDown();
+            if (countDownLatch.getCount() == 0L){
+                repository.put(holder.getPositionInStorage(), time, false, true);
             }
         }
     }

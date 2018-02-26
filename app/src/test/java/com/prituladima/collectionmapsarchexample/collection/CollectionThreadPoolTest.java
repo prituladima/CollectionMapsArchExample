@@ -1,11 +1,11 @@
-package com.prituladima.collectionmapsarchexample;
+package com.prituladima.collectionmapsarchexample.collection;
 
-import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
+import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.exceptions.ProcessorIsStillRunningException;
 import com.prituladima.collectionmapsarchexample.arch.operations.OperationExecutor;
 import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
-import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,9 +34,9 @@ public class CollectionThreadPoolTest {
     @Before
     public void init(){
         subject = PublishSubject.create();
-        repository = new CollectionRepository(subject);
+        storage = new OperationDataStorage();
+        repository = new CollectionRepository(subject, storage);
         countDownLatch = new CountDownLatch(EXPECTED_SIZE);
-        storage = OperationDataStorage.getInstance();
         holders = storage.getList();
     }
 
@@ -84,13 +84,13 @@ public class CollectionThreadPoolTest {
         OperationExecutor operationExecutor =
                 new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, AMOUNT, repository, storage).build();
         operationExecutor.start();
-
+        assertTrue(operationExecutor.isRunning());
         operationExecutor.stop();
 
         countDownLatch.await();
 
         assertEquals(0L, countDownLatch.getCount());
-
+        assertFalse(operationExecutor.isRunning());
     }
 
     @Test(expected = ProcessorIsStillRunningException.class)
@@ -102,11 +102,31 @@ public class CollectionThreadPoolTest {
         OperationExecutor operationExecutor =
                 new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, AMOUNT, repository, storage).build();
         operationExecutor.start();
-
+        assertTrue(operationExecutor.isRunning());
         operationExecutor.stop();
 
         operationExecutor.start();
+    }
 
+    @Test
+    public void threadStoppedTwice() throws InterruptedException{
+
+        CountDownLatch countDownLatch =  new CountDownLatch(EXPECTED_SIZE);
+
+
+        OperationExecutor operationExecutor =
+                new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, AMOUNT, repository, storage).build();
+        operationExecutor.start();
+        assertTrue(operationExecutor.isRunning());
+        operationExecutor.stop();
+
+        operationExecutor.stop();
+
+        assertTrue(operationExecutor.isRunning());
+
+        countDownLatch.await();
+
+        assertFalse(operationExecutor.isRunning());
     }
 
 }

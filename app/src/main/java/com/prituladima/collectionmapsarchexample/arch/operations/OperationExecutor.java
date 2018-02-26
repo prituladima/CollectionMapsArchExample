@@ -1,8 +1,8 @@
 package com.prituladima.collectionmapsarchexample.arch.operations;
 
-import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
+import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.exceptions.ProcessorIsStillRunningException;
-import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
 import java.util.ArrayList;
@@ -11,23 +11,23 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class OperationExecutor {
+public class OperationExecutor implements ExecutorLifecycle{
 
     private ExecutorService executorService;
-    private List<Runnable> runnables;
-    private CountDownLatch latch;
+    private List<Runnable> runnableList;
+    private CountDownLatch countDownLatch;
     private boolean isStarted = false;
 
-    private OperationExecutor(ExecutorService executorService, List<Runnable> runnables, CountDownLatch latch) {
+    private OperationExecutor(ExecutorService executorService, List<Runnable> runnableList, CountDownLatch countDownLatch) {
         this.executorService = executorService;
-        this.runnables = runnables;
-        this.latch = latch;
+        this.runnableList = runnableList;
+        this.countDownLatch = countDownLatch;
     }
 
     public void start() {
-        if(isStarted) throw new ProcessorIsStillRunningException();
+        if (isStarted) throw new ProcessorIsStillRunningException();
         isStarted = true;
-        for (Runnable runnable : runnables) {
+        for (Runnable runnable : runnableList) {
             executorService.submit(runnable);
         }
         executorService.shutdown();
@@ -36,12 +36,12 @@ public class OperationExecutor {
     public void stop() {
         int rest = executorService.shutdownNow().size();
         for (int i = 0; i < rest; i++) {
-            latch.countDown();
+            countDownLatch.countDown();
         }
     }
 
-    public boolean isRunning(){
-        return latch.getCount() != 0L;
+    public boolean isRunning() {
+        return countDownLatch.getCount() != 0L;
     }
 
     public static class OperationExecutorBuilder {
