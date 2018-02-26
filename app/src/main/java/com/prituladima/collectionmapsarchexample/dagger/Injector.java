@@ -14,7 +14,8 @@ import dagger.Component;
         modules = {
                 ContextModule.class,
                 EventbusModule.class,
-                RepositoryModule.class
+                RepositoryModule.class,
+                OperationDataStorageModule.class
 
         }
 )

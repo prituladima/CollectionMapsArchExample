@@ -7,7 +7,7 @@ import com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHol
 import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
 
 
-public class OperationDataStorage {
+public final class OperationDataStorage {
 
     private static OperationDataStorage instance;
 

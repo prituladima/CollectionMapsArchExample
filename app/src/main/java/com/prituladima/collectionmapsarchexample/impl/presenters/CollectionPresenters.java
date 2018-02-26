@@ -5,11 +5,13 @@ import android.os.Looper;
 
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
 import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
+import com.prituladima.collectionmapsarchexample.arch.operations.OperationExecutor;
 import com.prituladima.collectionmapsarchexample.arch.operations.OperationRunnable;
 import com.prituladima.collectionmapsarchexample.arch.presenter.BasePresenter;
 import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -31,12 +33,17 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
     private PublishSubject subject;
     private Subscription subscription;
     private ExecutorService service;
+    private OperationDataStorage storage;
+
+    private OperationExecutor operationExecutor;
 
     @Inject
     public CollectionPresenters(@Named(LIST_NAME) Repository repository,
-                                @Named(LIST_NAME) PublishSubject subject) {
+                                @Named(LIST_NAME) PublishSubject subject,
+                                OperationDataStorage storage) {
         this.repository = repository;
         this.subject = subject;
+        this.storage = storage;
     }
 
     @Override
@@ -56,19 +63,19 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
 
     @Override
     public void start(int amount, int threads) {
-        service = Executors.newFixedThreadPool(threads);
-        repository.reset();
-        getMvpView().onDataSetChanged(repository.get());
-        for (OperationParamHolder holder : OperationDataStorage.getInstance().getList()) {
-            service.submit(new OperationRunnable(holder, amount, repository));
+        if (operationExecutor != null && operationExecutor.isRunning()) {
+            getMvpView().onDataIsStillLoadingError();
+        } else {
+            repository.reset();
+            getMvpView().onDataSetChanged(repository.get());
+            operationExecutor = new OperationExecutor.OperationExecutorBuilder(new CountDownLatch(storage.getList().size()), threads, amount, repository, storage).build();
+            operationExecutor.start();
         }
-
-        service.shutdown();
     }
 
     @Override
     public void stop() {
-        service.shutdownNow();
+        operationExecutor.stop();
     }
 
     @Override

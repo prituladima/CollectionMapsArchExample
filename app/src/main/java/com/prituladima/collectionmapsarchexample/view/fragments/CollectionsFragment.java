@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.prituladima.collectionmapsarchexample.Logger;
 import com.prituladima.collectionmapsarchexample.MainApplication;
@@ -99,7 +100,7 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
 
     @Override
     public void onDataIsStillLoadingError() {
-
+        Toast.makeText(getActivity(), "Operation is still running!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
