@@ -18,7 +18,6 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 

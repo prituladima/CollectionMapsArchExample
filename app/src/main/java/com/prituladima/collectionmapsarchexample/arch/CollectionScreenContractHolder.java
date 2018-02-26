@@ -5,10 +5,6 @@ import com.prituladima.collectionmapsarchexample.arch.view.MVPView;
 
 import java.util.List;
 
-/**
- * Created by prituladima on 2/18/18.
- */
-
 public interface CollectionScreenContractHolder {
 
     interface CollectionView extends MVPView {
@@ -22,6 +18,5 @@ public interface CollectionScreenContractHolder {
         void start(int amount, int threads);
         void stop();
     }
-
 
 }

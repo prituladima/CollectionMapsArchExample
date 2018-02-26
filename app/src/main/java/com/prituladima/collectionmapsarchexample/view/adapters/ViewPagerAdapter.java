@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.prituladima.collectionmapsarchexample.view.fragments.CollectionsFragment;
 import com.prituladima.collectionmapsarchexample.view.fragments.MapsFragment;
 
-
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public ViewPagerAdapter(FragmentManager fragmentManager) {

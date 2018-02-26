@@ -3,7 +3,6 @@ package com.prituladima.collectionmapsarchexample.dagger;
 import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
