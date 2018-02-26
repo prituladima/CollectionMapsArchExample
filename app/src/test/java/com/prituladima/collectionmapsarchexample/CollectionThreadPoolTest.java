@@ -2,18 +2,16 @@ package com.prituladima.collectionmapsarchexample;
 
 import com.prituladima.collectionmapsarchexample.arch.dto.CellDTO;
 import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
-import com.prituladima.collectionmapsarchexample.arch.operations.OperationRunnable;
+import com.prituladima.collectionmapsarchexample.arch.exceptions.ProcessorIsStillRunningException;
+import com.prituladima.collectionmapsarchexample.arch.operations.OperationExecutor;
 import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
 import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import rx.subjects.PublishSubject;
 
@@ -25,32 +23,34 @@ public class CollectionThreadPoolTest {
     private static final int EXPECTED_SIZE = 21;
 
     private static final int THREADS = 4;
-    private static final int AMOUNT = 100_000;
+    private static final int AMOUNT = 10_000;
 
-    private ExecutorService service;
     private PublishSubject subject;
     private CollectionRepository repository;
     private CountDownLatch countDownLatch;
+    private OperationDataStorage storage;
     private List<OperationParamHolder> holders;
 
     @Before
     public void init(){
-        service = Executors.newFixedThreadPool(THREADS);
         subject = PublishSubject.create();
         repository = new CollectionRepository(subject);
         countDownLatch = new CountDownLatch(EXPECTED_SIZE);
-        holders = OperationDataStorage.getInstance().getList();
+        storage = OperationDataStorage.getInstance();
+        holders = storage.getList();
     }
 
     @Test
-    public void threadPoolTest() throws InterruptedException{
-
+    public void amountInStorageTest() {
         assertEquals(EXPECTED_SIZE, holders.size());
+    }
 
-        for (OperationParamHolder holder : holders) {
-            service.submit(new OperationRunnable(holder, AMOUNT, repository, countDownLatch));
-        }
-        service.shutdown();
+    @Test
+    public void threadPoolRunningTest() throws InterruptedException{
+
+        OperationExecutor operationExecutor =
+                new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, AMOUNT, repository, storage).build();
+        operationExecutor.start();
 
         countDownLatch.await();
 
@@ -64,5 +64,49 @@ public class CollectionThreadPoolTest {
 
     }
 
+    @Test(expected = ProcessorIsStillRunningException.class)
+    public void threadPoolRunningTwice() {
+
+        OperationExecutor operationExecutor =
+                new OperationExecutor.OperationExecutorBuilder(new CountDownLatch(EXPECTED_SIZE), THREADS, AMOUNT, repository, storage).build();
+        operationExecutor.start();
+        operationExecutor.start();
+
+    }
+
+    @Test(timeout = 1_000)
+    public void threadStopped() throws InterruptedException{
+
+        CountDownLatch countDownLatch =  new CountDownLatch(EXPECTED_SIZE);
+
+        assertEquals(EXPECTED_SIZE, countDownLatch.getCount());
+
+        OperationExecutor operationExecutor =
+                new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, AMOUNT, repository, storage).build();
+        operationExecutor.start();
+
+        operationExecutor.stop();
+
+        countDownLatch.await();
+
+        assertEquals(0L, countDownLatch.getCount());
+
+    }
+
+    @Test(expected = ProcessorIsStillRunningException.class)
+    public void threadStoppedAndRunAgain() throws InterruptedException{
+
+        CountDownLatch countDownLatch =  new CountDownLatch(EXPECTED_SIZE);
+
+
+        OperationExecutor operationExecutor =
+                new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, AMOUNT, repository, storage).build();
+        operationExecutor.start();
+
+        operationExecutor.stop();
+
+        operationExecutor.start();
+
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.prituladima.collectionmapsarchexample.arch.operations;
 
 import com.prituladima.collectionmapsarchexample.arch.dto.OperationParamHolder;
+import com.prituladima.collectionmapsarchexample.arch.exceptions.ProcessorIsStillRunningException;
 import com.prituladima.collectionmapsarchexample.arch.repository.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
@@ -15,6 +16,7 @@ public class OperationExecutor {
     private ExecutorService executorService;
     private List<Runnable> runnables;
     private CountDownLatch latch;
+    private boolean isStarted = false;
 
     private OperationExecutor(ExecutorService executorService, List<Runnable> runnables, CountDownLatch latch) {
         this.executorService = executorService;
@@ -23,6 +25,8 @@ public class OperationExecutor {
     }
 
     public void start() {
+        if(isStarted) throw new ProcessorIsStillRunningException();
+        isStarted = true;
         for (Runnable runnable : runnables) {
             executorService.submit(runnable);
         }
