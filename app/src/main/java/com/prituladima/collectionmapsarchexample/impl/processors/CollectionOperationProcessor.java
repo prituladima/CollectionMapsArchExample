@@ -1,5 +1,8 @@
 package com.prituladima.collectionmapsarchexample.impl.processors;
 
+import com.prituladima.collectionmapsarchexample.arch.constants.Implementation;
+import com.prituladima.collectionmapsarchexample.arch.constants.Operation;
+import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.exceptions.NoSuchImplementationException;
 import com.prituladima.collectionmapsarchexample.arch.exceptions.NoSuchOperationException;
 import com.prituladima.collectionmapsarchexample.arch.processor.CollectionProcessor;
@@ -19,15 +22,14 @@ public class CollectionOperationProcessor implements
         ImplementationProvider<List<Integer>>,
         PreparedDataProvider<List<Integer>> {
 
-
-    private ListImplementation type;
+    private ListImplementation implementation;
     private ListOperation operation;
     private int amount = -1;
 
-    public CollectionOperationProcessor(ListImplementation type, ListOperation operation, int amount) {
-        this.type = type;
+    public CollectionOperationProcessor(OperationParamHolder holder, int amount) {
+        this.implementation = (ListImplementation)holder.getImplementation();
         this.amount = amount;
-        this.operation = operation;
+        this.operation = (ListOperation)holder.getOperationType();
     }
 
     @Override
@@ -108,10 +110,6 @@ public class CollectionOperationProcessor implements
         return finish - start;
     }
 
-
-
-    ///////////TODO move to another implementation
-
     @Override
     public List<Integer> getPreparedData() {
         List<Integer> prepared = getImplementationPrototype();
@@ -123,7 +121,7 @@ public class CollectionOperationProcessor implements
 
     @Override
     public List<Integer> getImplementationPrototype() {
-        switch (type) {
+        switch (implementation) {
             case ARRAY_LIST:
                 return new ArrayList<>();
             case LINKED_LIST:

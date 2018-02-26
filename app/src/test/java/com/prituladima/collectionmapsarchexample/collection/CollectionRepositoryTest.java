@@ -1,7 +1,7 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
 
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
@@ -20,12 +20,12 @@ public class CollectionRepositoryTest {
 
     private Repository repository;
     private PublishSubject publishSubject;
-    private OperationDataStorage storage;
+    private ListOperationDataStorage storage;
 
     @Before
     public void init(){
         publishSubject = PublishSubject.create();
-        storage  = new OperationDataStorage();
+        storage  = new ListOperationDataStorage();
         repository = new CollectionRepository(publishSubject, storage);
     }
 

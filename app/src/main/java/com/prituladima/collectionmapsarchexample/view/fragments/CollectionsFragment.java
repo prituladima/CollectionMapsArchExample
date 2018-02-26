@@ -16,7 +16,7 @@ import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
 import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 import com.prituladima.collectionmapsarchexample.impl.presenters.CollectionPresenters;
 import com.prituladima.collectionmapsarchexample.view.fragments.adapters.CollectionsAdapter;
 
@@ -46,7 +46,7 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
     CollectionPresenters presenter;
 
     @Inject
-    OperationDataStorage storage;
+    ListOperationDataStorage storage;
 
 
     CollectionsAdapter adapter;

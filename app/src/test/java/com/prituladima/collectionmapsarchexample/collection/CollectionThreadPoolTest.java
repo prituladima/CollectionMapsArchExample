@@ -5,7 +5,7 @@ import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolde
 import com.prituladima.collectionmapsarchexample.arch.exceptions.ProcessorIsStillRunningException;
 import com.prituladima.collectionmapsarchexample.arch.operations.OperationExecutor;
 import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,13 +28,13 @@ public class CollectionThreadPoolTest {
     private PublishSubject subject;
     private CollectionRepository repository;
     private CountDownLatch countDownLatch;
-    private OperationDataStorage storage;
+    private ListOperationDataStorage storage;
     private List<OperationParamHolder> holders;
 
     @Before
     public void init(){
         subject = PublishSubject.create();
-        storage = new OperationDataStorage();
+        storage = new ListOperationDataStorage();
         repository = new CollectionRepository(subject, storage);
         countDownLatch = new CountDownLatch(EXPECTED_SIZE);
         holders = storage.getList();

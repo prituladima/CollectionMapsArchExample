@@ -1,6 +1,6 @@
 package com.prituladima.collectionmapsarchexample.dagger;
 
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
@@ -20,7 +20,7 @@ public class RepositoryModule {
     @Singleton
     @Named(LIST_NAME)
     public Repository provideCollectionRepository(@Named(LIST_NAME) PublishSubject<Boolean> subject,
-                                                  OperationDataStorage storage){
+                                                  ListOperationDataStorage storage){
         return new CollectionRepository(subject, storage);
     }
 

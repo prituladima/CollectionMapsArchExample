@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +21,10 @@ import butterknife.ButterKnife;
 
 public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.ViewHolder> {
 
-    private OperationDataStorage storage;
+    private ListOperationDataStorage storage;
     private List<CellDTO> data = new ArrayList<>();
 
-    public CollectionsAdapter(OperationDataStorage storage) {
+    public CollectionsAdapter(ListOperationDataStorage storage) {
         this.storage = storage;
     }
 

@@ -1,6 +1,6 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,14 +9,14 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class OperationDataStorageTest {
+public class ListOperationDataStorageTest {
 
     private static final int EXPECTED_SIZE = 21;
-    private OperationDataStorage storage;
+    private ListOperationDataStorage storage;
 
     @Before
     public void init(){
-        storage = new OperationDataStorage();
+        storage = new ListOperationDataStorage();
     }
 
     @Test

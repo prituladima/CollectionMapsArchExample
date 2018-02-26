@@ -2,8 +2,10 @@ package com.prituladima.collectionmapsarchexample.arch.operations;
 
 import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.exceptions.ProcessorIsStillRunningException;
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.processor.Processor;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
+import com.prituladima.collectionmapsarchexample.impl.processors.CollectionOperationProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,13 +52,13 @@ public class OperationExecutor implements ExecutorLifecycle{
         private int threads;
         private int amount;
         private Repository repository;
-        private OperationDataStorage storage;
+        private ListOperationDataStorage storage;
 
         public OperationExecutorBuilder(CountDownLatch latch,
                                         int threads,
                                         int amount,
                                         Repository repository,
-                                        OperationDataStorage storage) {
+                                        ListOperationDataStorage storage) {
             this.latch = latch;
             this.threads = threads;
             this.amount = amount;
@@ -68,7 +70,8 @@ public class OperationExecutor implements ExecutorLifecycle{
             ExecutorService executorService = Executors.newFixedThreadPool(threads);
             List<Runnable> runnableList = new ArrayList<>();
             for (OperationParamHolder holder : storage.getList()) {
-                runnableList.add(new OperationRunnable(holder, amount, repository, latch));
+                Processor processor = new CollectionOperationProcessor(holder, amount);
+                runnableList.add(new OperationRunnable(processor, holder, amount, repository, latch));
             }
 
             return new OperationExecutor(executorService, runnableList, latch);

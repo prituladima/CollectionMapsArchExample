@@ -4,9 +4,9 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
+import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.operations.OperationExecutor;
 import com.prituladima.collectionmapsarchexample.arch.presenter.BasePresenter;
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
 import java.util.concurrent.CountDownLatch;
@@ -30,14 +30,14 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
     private PublishSubject<Boolean> subject;
     private Subscription subscription;
     private ExecutorService service;
-    private OperationDataStorage storage;
+    private ListOperationDataStorage storage;
 
     private OperationExecutor operationExecutor;
 
     @Inject
     public CollectionPresenters(@Named(LIST_NAME) Repository repository,
                                 @Named(LIST_NAME) PublishSubject<Boolean> subject,
-                                OperationDataStorage storage) {
+                                ListOperationDataStorage storage) {
         this.repository = repository;
         this.subject = subject;
         this.storage = storage;

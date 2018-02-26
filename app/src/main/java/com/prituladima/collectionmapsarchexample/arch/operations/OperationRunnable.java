@@ -3,6 +3,7 @@ package com.prituladima.collectionmapsarchexample.arch.operations;
 import com.prituladima.collectionmapsarchexample.Logger;
 import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
 import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolder;
+import com.prituladima.collectionmapsarchexample.arch.processor.Processor;
 import com.prituladima.collectionmapsarchexample.impl.processors.CollectionOperationProcessor;
 import com.prituladima.collectionmapsarchexample.arch.processor.CollectionProcessor;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
@@ -16,12 +17,14 @@ public class OperationRunnable implements Runnable {
     private int amount;
     private Repository repository;
     private CountDownLatch countDownLatch;
+    private Processor processor;
 
-    public OperationRunnable(OperationParamHolder holder, int amount, Repository repository, CountDownLatch countDownLatch) {
+    public OperationRunnable(Processor processor, OperationParamHolder holder, int amount, Repository repository, CountDownLatch countDownLatch) {
         this.holder = holder;
         this.amount = amount;
         this.repository = repository;
         this.countDownLatch = countDownLatch;
+        this.processor = processor;
     }
 
     @Override
@@ -29,8 +32,6 @@ public class OperationRunnable implements Runnable {
         Long time = 0L;
         try {
             repository.put(holder.getPositionInStorage(), time, true, false);
-            //todo move initialization inn another class
-            CollectionProcessor processor = new CollectionOperationProcessor(holder.getImplementation(), holder.getOperationType(), amount);
             time = processor.execute();
             repository.put(holder.getPositionInStorage(), time, false, false);
         }catch (Throwable throwable){
