@@ -1,9 +1,5 @@
 package com.prituladima.collectionmapsarchexample.arch.processor;
 
-/**
- * Created by prituladima on 2/18/18.
- */
-
 public interface CollectionProcessor<Result> extends Processor {
 
     Result addInTheHead();
@@ -17,6 +13,5 @@ public interface CollectionProcessor<Result> extends Processor {
     Result search();
 
     Result execute();
-
 
 }
