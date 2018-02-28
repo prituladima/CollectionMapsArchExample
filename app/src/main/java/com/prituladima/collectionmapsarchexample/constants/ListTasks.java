@@ -1,9 +1,6 @@
 package com.prituladima.collectionmapsarchexample.constants;
 
-/**
- * Created by prituladima on 3/1/18.
- */
-public enum ListOperation implements Operation {
+public enum ListTasks implements Tasks {
     ADD_IN_THE_HEAD("Adding in the head"),
     ADD_IN_THE_TAIL("Adding in the tail"),
     ADD_IN_THE_MIDDLE("Adding in the middle"),
@@ -14,12 +11,12 @@ public enum ListOperation implements Operation {
 
     private String operation;
 
-    ListOperation(String operation) {
+    ListTasks(String operation) {
         this.operation = operation;
     }
 
     @Override
-    public String getOperation() {
+    public String get() {
         return operation;
     }
 

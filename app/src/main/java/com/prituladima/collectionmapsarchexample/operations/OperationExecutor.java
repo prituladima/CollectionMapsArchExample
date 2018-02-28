@@ -1,8 +1,8 @@
 package com.prituladima.collectionmapsarchexample.operations;
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
 import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
 import com.prituladima.collectionmapsarchexample.exceptions.ProcessorIsStillRunningException;
 import com.prituladima.collectionmapsarchexample.processor.Processor;
 import com.prituladima.collectionmapsarchexample.processors.CollectionOperationProcessor;
@@ -53,13 +53,13 @@ public final class OperationExecutor implements LifecycleExecutor {
         private final int threads;
         private final int amount;
         private final Repository repository;
-        private final TasksInfoStarage storage;
+        private final TasksInfoStorage storage;
 
         public OperationExecutorBuilder(CountDownLatch latch,
                                         int threads,
                                         int amount,
                                         Repository repository,
-                                        TasksInfoStarage storage) {
+                                        TasksInfoStorage storage) {
             this.latch = latch;
             this.threads = threads;
             this.amount = amount;

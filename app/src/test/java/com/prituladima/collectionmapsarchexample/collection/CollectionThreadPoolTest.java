@@ -1,7 +1,7 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
-import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStarage;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
+import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStorage;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
 import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
 import com.prituladima.collectionmapsarchexample.entity.CellDTO;
 import com.prituladima.collectionmapsarchexample.exceptions.ProcessorIsStillRunningException;
@@ -29,13 +29,13 @@ public class CollectionThreadPoolTest {
     private PublishSubject subject;
     private CollectionRepository repository;
     private CountDownLatch countDownLatch;
-    private TasksInfoStarage storage;
+    private TasksInfoStorage storage;
     private List<TaskInfo> holders;
 
     @Before
     public void init(){
         subject = PublishSubject.create();
-        storage = new ListTasksInfoStarage();
+        storage = new ListTasksInfoStorage();
         repository = new CollectionRepository(subject, storage);
         countDownLatch = new CountDownLatch(EXPECTED_SIZE);
         holders = storage.get();

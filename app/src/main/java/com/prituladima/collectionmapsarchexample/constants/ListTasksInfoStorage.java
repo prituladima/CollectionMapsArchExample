@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public final class ListTasksInfoStarage implements TasksInfoStarage {
+public final class ListTasksInfoStorage implements TasksInfoStorage {
 
     private final List<TaskInfo> list;
 
-    public ListTasksInfoStarage() {
+    public ListTasksInfoStorage() {
         list = new ArrayList<>();
         int index = 0;
-        for (ListOperation operation : ListOperation.values())
-            for (ListImplementation implementation : ListImplementation.values())
+        for (ListTasks operation : ListTasks.values())
+            for (ListTypes implementation : ListTypes.values())
                 list.add(new TaskInfo(operation, implementation, index++));
     }
 

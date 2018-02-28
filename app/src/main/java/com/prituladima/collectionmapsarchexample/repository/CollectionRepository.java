@@ -1,7 +1,7 @@
 package com.prituladima.collectionmapsarchexample.repository;
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
 import com.prituladima.collectionmapsarchexample.entity.CellDTO;
 
 import java.util.ArrayList;
@@ -12,12 +12,12 @@ import rx.subjects.PublishSubject;
 public class CollectionRepository implements Repository {
 
     private final PublishSubject<Boolean> subject;
-    private final TasksInfoStarage storage;
+    private final TasksInfoStorage storage;
 
     private List<CellDTO> data;
 
     public CollectionRepository(PublishSubject<Boolean> subject,
-                                TasksInfoStarage storage) {
+                                TasksInfoStorage storage) {
         this.subject = subject;
         this.storage = storage;
         data = getDefault();

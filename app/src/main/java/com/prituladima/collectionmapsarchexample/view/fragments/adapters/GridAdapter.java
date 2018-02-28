@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.prituladima.collectionmapsarchexample.R;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
 import com.prituladima.collectionmapsarchexample.entity.CellDTO;
 
 import java.util.ArrayList;
@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
 
 public final class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
-    private TasksInfoStarage storage;
+    private TasksInfoStorage storage;
     private List<CellDTO> data = new ArrayList<>();
 
     @Inject
-    public GridAdapter(TasksInfoStarage storage) {
+    public GridAdapter(TasksInfoStorage storage) {
         this.storage = storage;
     }
 
@@ -45,8 +45,8 @@ public final class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String impl = storage.get().get(position).getImplementation().getImplementation();
-        String oper = storage.get().get(position).getOperationType().getOperation();
+        String impl = storage.get().get(position).getTypes().get();
+        String oper = storage.get().get(position).getTaskType().get();
 
         holder.labelText.setText(impl + "\n" + oper);
         holder.myTextView.setText(String.valueOf(data.get(position).getTime()));

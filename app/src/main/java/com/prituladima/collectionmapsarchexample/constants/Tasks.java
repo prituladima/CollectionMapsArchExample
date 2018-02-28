@@ -1,7 +1,7 @@
 package com.prituladima.collectionmapsarchexample.constants;
 
-public interface Operation {
+public interface Tasks {
 
-    String getOperation();
+    String get();
 
 }

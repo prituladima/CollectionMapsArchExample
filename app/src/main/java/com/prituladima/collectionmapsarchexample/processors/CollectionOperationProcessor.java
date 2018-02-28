@@ -1,5 +1,7 @@
 package com.prituladima.collectionmapsarchexample.processors;
 
+import com.prituladima.collectionmapsarchexample.constants.ListTypes;
+import com.prituladima.collectionmapsarchexample.constants.ListTasks;
 import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
 import com.prituladima.collectionmapsarchexample.exceptions.NoSuchImplementationException;
 import com.prituladima.collectionmapsarchexample.exceptions.NoSuchOperationException;
@@ -12,8 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.prituladima.collectionmapsarchexample.constants.ListImplementation;
-import com.prituladima.collectionmapsarchexample.constants.ListOperation;
 import static com.prituladima.collectionmapsarchexample.util.TimeUtil.getNow;
 
 public class CollectionOperationProcessor implements
@@ -21,14 +21,14 @@ public class CollectionOperationProcessor implements
         ImplementationProvider<List<Integer>>,
         PreparedDataProvider<List<Integer>> {
 
-    private final ListImplementation implementation;
-    private final ListOperation operation;
+    private final ListTypes implementation;
+    private final ListTasks operation;
     private final int amount;
 
     public CollectionOperationProcessor(TaskInfo holder, int amount) {
-        this.implementation = (ListImplementation) holder.getImplementation();
+        this.implementation = (ListTypes) holder.getTypes();
         this.amount = amount;
-        this.operation = (ListOperation) holder.getOperationType();
+        this.operation = (ListTasks) holder.getTaskType();
     }
 
     @Override

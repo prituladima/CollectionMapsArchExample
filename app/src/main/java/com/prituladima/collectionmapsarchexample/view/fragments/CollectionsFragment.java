@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.prituladima.collectionmapsarchexample.constants.ListOperationEnumHolder.LIST_NAME;
+import static com.prituladima.collectionmapsarchexample.constants.Qualifiers.LIST_QUALIFIER;
 
 public final class CollectionsFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
 
@@ -45,11 +45,11 @@ public final class CollectionsFragment extends Fragment implements CollectionScr
     EditText threadsText;
 
     @Inject
-    @Named(LIST_NAME)
+    @Named(LIST_QUALIFIER)
     CollectionPresenters presenter;
 
     @Inject
-    @Named(LIST_NAME)
+    @Named(LIST_QUALIFIER)
     GridAdapter adapter;
 
     private Unbinder unbinder;
@@ -108,7 +108,7 @@ public final class CollectionsFragment extends Fragment implements CollectionScr
 
     @Override
     public void onDataIsStillLoadingError() {
-        Toast.makeText(getActivity(), "ListOperation is still running!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "ListTasks is still running!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.prituladima.collectionmapsarchexample.constants;
 
 import java.util.List;
 
-public interface TasksInfoStarage {
+public interface TasksInfoStorage {
 
     List<TaskInfo> get();
 

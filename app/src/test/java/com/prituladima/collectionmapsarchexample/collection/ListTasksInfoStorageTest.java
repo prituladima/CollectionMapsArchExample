@@ -1,7 +1,7 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
-import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStarage;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
+import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStorage;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,14 +10,14 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ListTasksInfoStarageTest {
+public class ListTasksInfoStorageTest {
 
     private static final int EXPECTED_SIZE = 21;
-    private TasksInfoStarage storage;
+    private TasksInfoStorage storage;
 
     @Before
     public void init(){
-        storage = new ListTasksInfoStarage();
+        storage = new ListTasksInfoStorage();
     }
 
     @Test

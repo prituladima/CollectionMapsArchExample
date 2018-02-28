@@ -2,8 +2,8 @@ package com.prituladima.collectionmapsarchexample.collection;
 
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
-import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStarage;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
+import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStorage;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
 import com.prituladima.collectionmapsarchexample.repository.CollectionRepository;
 
 import org.junit.Before;
@@ -21,12 +21,12 @@ public class CollectionRepositoryTest {
 
     private Repository repository;
     private PublishSubject publishSubject;
-    private TasksInfoStarage storage;
+    private TasksInfoStorage storage;
 
     @Before
     public void init(){
         publishSubject = PublishSubject.create();
-        storage  = new ListTasksInfoStarage();
+        storage  = new ListTasksInfoStorage();
         repository = new CollectionRepository(publishSubject, storage);
     }
 
