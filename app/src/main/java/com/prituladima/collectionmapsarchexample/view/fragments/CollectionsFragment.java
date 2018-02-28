@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.prituladima.collectionmapsarchexample.constants.OperationEnumHolder.ListOperationEnumHolder.LIST_NAME;
+import static com.prituladima.collectionmapsarchexample.constants.ListOperationEnumHolder.LIST_NAME;
 
 public final class CollectionsFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
 
@@ -59,7 +59,7 @@ public final class CollectionsFragment extends Fragment implements CollectionScr
 
         View rootView = inflater.inflate(R.layout.fragment_collections, container, false);
 
-        ((MainApplication) getActivity().getApplication()).getApplicationInjector().inject(this);
+        ((MainApplication) getActivity().getApplication()).getApplicationComponent().inject(this);
         unbinder = ButterKnife.bind(this, rootView);
 
         collectionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));

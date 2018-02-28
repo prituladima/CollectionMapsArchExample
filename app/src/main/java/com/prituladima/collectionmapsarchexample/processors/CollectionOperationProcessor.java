@@ -1,6 +1,6 @@
 package com.prituladima.collectionmapsarchexample.processors;
 
-import com.prituladima.collectionmapsarchexample.entity.OperationParamHolder;
+import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
 import com.prituladima.collectionmapsarchexample.exceptions.NoSuchImplementationException;
 import com.prituladima.collectionmapsarchexample.exceptions.NoSuchOperationException;
 import com.prituladima.collectionmapsarchexample.processor.CollectionProcessor;
@@ -12,8 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static com.prituladima.collectionmapsarchexample.constants.OperationEnumHolder.ListOperationEnumHolder.ListImplementation;
-import static com.prituladima.collectionmapsarchexample.constants.OperationEnumHolder.ListOperationEnumHolder.ListOperation;
+import com.prituladima.collectionmapsarchexample.constants.ListImplementation;
+import com.prituladima.collectionmapsarchexample.constants.ListOperation;
 import static com.prituladima.collectionmapsarchexample.util.TimeUtil.getNow;
 
 public class CollectionOperationProcessor implements
@@ -25,7 +25,7 @@ public class CollectionOperationProcessor implements
     private final ListOperation operation;
     private final int amount;
 
-    public CollectionOperationProcessor(OperationParamHolder holder, int amount) {
+    public CollectionOperationProcessor(TaskInfo holder, int amount) {
         this.implementation = (ListImplementation) holder.getImplementation();
         this.amount = amount;
         this.operation = (ListOperation) holder.getOperationType();

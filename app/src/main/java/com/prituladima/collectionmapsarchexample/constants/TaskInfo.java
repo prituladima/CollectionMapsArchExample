@@ -1,15 +1,12 @@
-package com.prituladima.collectionmapsarchexample.entity;
+package com.prituladima.collectionmapsarchexample.constants;
 
-import com.prituladima.collectionmapsarchexample.constants.Implementation;
-import com.prituladima.collectionmapsarchexample.constants.Operation;
-
-public final class OperationParamHolder {
+public final class TaskInfo {
 
     private final Operation operationType;
     private final Implementation implementation;
     private final int positionInStorage;
 
-    public OperationParamHolder(Operation operationType, Implementation implementation, int positionInStorage) {
+    public TaskInfo(Operation operationType, Implementation implementation, int positionInStorage) {
         this.operationType = operationType;
         this.implementation = implementation;
         this.positionInStorage = positionInStorage;
@@ -29,7 +26,7 @@ public final class OperationParamHolder {
 
     @Override
     public String toString() {
-        return "OperationParamHolder{" +
+        return "TaskInfo{" +
                 "operationType=" + operationType +
                 ", implementation=" + implementation +
                 ", positionInStorage=" + positionInStorage +

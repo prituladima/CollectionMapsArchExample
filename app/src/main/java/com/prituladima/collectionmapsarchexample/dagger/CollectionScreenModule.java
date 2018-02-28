@@ -1,8 +1,8 @@
 package com.prituladima.collectionmapsarchexample.dagger;
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
-import com.prituladima.collectionmapsarchexample.constants.ListOperationDataStorage;
-import com.prituladima.collectionmapsarchexample.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStarage;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
 import com.prituladima.collectionmapsarchexample.operations.LifecycleExecutorProducer;
 import com.prituladima.collectionmapsarchexample.operations.OperationExecutorProducer;
 import com.prituladima.collectionmapsarchexample.presenters.CollectionPresenters;
@@ -16,7 +16,7 @@ import dagger.Module;
 import dagger.Provides;
 import rx.subjects.PublishSubject;
 
-import static com.prituladima.collectionmapsarchexample.constants.OperationEnumHolder.ListOperationEnumHolder.LIST_NAME;
+import static com.prituladima.collectionmapsarchexample.constants.ListOperationEnumHolder.LIST_NAME;
 
 @Module
 class CollectionScreenModule {
@@ -24,7 +24,7 @@ class CollectionScreenModule {
     //1
     @Provides
     @Named(LIST_NAME)
-    GridAdapter provideListGridAdapter(@Named(LIST_NAME) OperationDataStorage storage) {
+    GridAdapter provideListGridAdapter(@Named(LIST_NAME) TasksInfoStarage storage) {
         return new GridAdapter(storage);
     }
 
@@ -40,7 +40,7 @@ class CollectionScreenModule {
 
     @Provides
     LifecycleExecutorProducer providesLifecycleExecutorProduser(@Named(LIST_NAME) Repository repository,
-                                                                @Named(LIST_NAME) OperationDataStorage storage) {
+                                                                @Named(LIST_NAME) TasksInfoStarage storage) {
         return new OperationExecutorProducer(repository, storage);
     }
 
@@ -49,7 +49,7 @@ class CollectionScreenModule {
     @Singleton
     @Named(LIST_NAME)
     Repository provideCollectionRepository(@Named(LIST_NAME) PublishSubject<Boolean> subject,
-                                           @Named(LIST_NAME) OperationDataStorage storage) {
+                                           @Named(LIST_NAME) TasksInfoStarage storage) {
         return new CollectionRepository(subject, storage);
     }
 
@@ -57,8 +57,8 @@ class CollectionScreenModule {
     @Provides
     @Singleton
     @Named(LIST_NAME)
-    OperationDataStorage provideOperationDataStorage() {
-        return new ListOperationDataStorage();
+    TasksInfoStarage provideOperationDataStorage() {
+        return new ListTasksInfoStarage();
     }
 
     //leaf

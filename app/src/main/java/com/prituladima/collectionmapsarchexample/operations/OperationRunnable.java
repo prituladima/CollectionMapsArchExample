@@ -1,8 +1,8 @@
 package com.prituladima.collectionmapsarchexample.operations;
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
+import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
 import com.prituladima.collectionmapsarchexample.entity.CellDTO;
-import com.prituladima.collectionmapsarchexample.entity.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.processor.Processor;
 import com.prituladima.collectionmapsarchexample.util.Logger;
 
@@ -11,13 +11,13 @@ import java.util.concurrent.CountDownLatch;
 public final class OperationRunnable implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(OperationRunnable.class);
-    private OperationParamHolder holder;
+    private TaskInfo holder;
     private int amount;
     private Repository repository;
     private CountDownLatch countDownLatch;
     private Processor processor;
 
-    public OperationRunnable(Processor processor, OperationParamHolder holder, int amount, Repository repository, CountDownLatch countDownLatch) {
+    public OperationRunnable(Processor processor, TaskInfo holder, int amount, Repository repository, CountDownLatch countDownLatch) {
         this.holder = holder;
         this.amount = amount;
         this.repository = repository;

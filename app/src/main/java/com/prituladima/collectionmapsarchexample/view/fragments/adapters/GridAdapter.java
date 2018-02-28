@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.prituladima.collectionmapsarchexample.R;
-import com.prituladima.collectionmapsarchexample.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
 import com.prituladima.collectionmapsarchexample.entity.CellDTO;
 
 import java.util.ArrayList;
@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
 
 public final class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
-    private OperationDataStorage storage;
+    private TasksInfoStarage storage;
     private List<CellDTO> data = new ArrayList<>();
 
     @Inject
-    public GridAdapter(OperationDataStorage storage) {
+    public GridAdapter(TasksInfoStarage storage) {
         this.storage = storage;
     }
 

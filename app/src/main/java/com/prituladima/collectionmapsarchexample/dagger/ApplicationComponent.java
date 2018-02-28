@@ -15,7 +15,7 @@ import dagger.Component;
                 CollectionScreenModule.class
         }
 )
-public interface Injector {
+public interface ApplicationComponent {
 
     void inject(MainApplication application);
 

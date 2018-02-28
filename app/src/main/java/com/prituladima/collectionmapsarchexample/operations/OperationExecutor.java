@@ -1,8 +1,8 @@
 package com.prituladima.collectionmapsarchexample.operations;
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
-import com.prituladima.collectionmapsarchexample.constants.OperationDataStorage;
-import com.prituladima.collectionmapsarchexample.entity.OperationParamHolder;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
+import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
 import com.prituladima.collectionmapsarchexample.exceptions.ProcessorIsStillRunningException;
 import com.prituladima.collectionmapsarchexample.processor.Processor;
 import com.prituladima.collectionmapsarchexample.processors.CollectionOperationProcessor;
@@ -53,13 +53,13 @@ public final class OperationExecutor implements LifecycleExecutor {
         private final int threads;
         private final int amount;
         private final Repository repository;
-        private final OperationDataStorage storage;
+        private final TasksInfoStarage storage;
 
         public OperationExecutorBuilder(CountDownLatch latch,
                                         int threads,
                                         int amount,
                                         Repository repository,
-                                        OperationDataStorage storage) {
+                                        TasksInfoStarage storage) {
             this.latch = latch;
             this.threads = threads;
             this.amount = amount;
@@ -70,7 +70,7 @@ public final class OperationExecutor implements LifecycleExecutor {
         public OperationExecutor build() {
             ExecutorService executorService = Executors.newFixedThreadPool(threads);
             List<Runnable> runnableList = new ArrayList<>();
-            for (OperationParamHolder holder : storage.get()) {
+            for (TaskInfo holder : storage.get()) {
                 Processor processor = new CollectionOperationProcessor(holder, amount);
                 runnableList.add(new OperationRunnable(processor, holder, amount, repository, latch));
             }

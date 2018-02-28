@@ -1,12 +1,12 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
-import com.prituladima.collectionmapsarchexample.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStarage;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStarage;
+import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
 import com.prituladima.collectionmapsarchexample.entity.CellDTO;
-import com.prituladima.collectionmapsarchexample.entity.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.exceptions.ProcessorIsStillRunningException;
 import com.prituladima.collectionmapsarchexample.operations.OperationExecutor;
 import com.prituladima.collectionmapsarchexample.repository.CollectionRepository;
-import com.prituladima.collectionmapsarchexample.constants.ListOperationDataStorage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,13 +29,13 @@ public class CollectionThreadPoolTest {
     private PublishSubject subject;
     private CollectionRepository repository;
     private CountDownLatch countDownLatch;
-    private OperationDataStorage storage;
-    private List<OperationParamHolder> holders;
+    private TasksInfoStarage storage;
+    private List<TaskInfo> holders;
 
     @Before
     public void init(){
         subject = PublishSubject.create();
-        storage = new ListOperationDataStorage();
+        storage = new ListTasksInfoStarage();
         repository = new CollectionRepository(subject, storage);
         countDownLatch = new CountDownLatch(EXPECTED_SIZE);
         holders = storage.get();
@@ -57,7 +57,7 @@ public class CollectionThreadPoolTest {
 
         for (int i = 0; i < EXPECTED_SIZE; i++) {
             CellDTO cell = repository.get().get(i);
-            OperationParamHolder holder = holders.get(i);
+            TaskInfo holder = holders.get(i);
             System.out.println(" --- " + cell + " --- " + holder);
             assertTrue(cell.getTime() >= 0);
             assertFalse(cell.isLoading());

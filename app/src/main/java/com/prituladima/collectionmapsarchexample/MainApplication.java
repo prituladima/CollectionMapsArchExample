@@ -2,8 +2,8 @@ package com.prituladima.collectionmapsarchexample;
 
 import android.app.Application;
 
-import com.prituladima.collectionmapsarchexample.dagger.DaggerInjector;
-import com.prituladima.collectionmapsarchexample.dagger.Injector;
+import com.prituladima.collectionmapsarchexample.dagger.ApplicationComponent;
+import com.prituladima.collectionmapsarchexample.dagger.DaggerApplicationComponent;
 import com.prituladima.collectionmapsarchexample.util.Logger;
 
 
@@ -11,16 +11,16 @@ public final class MainApplication extends Application {
 
     private Logger LOGGER = Logger.getLogger(MainApplication.class);
 
-    private Injector injector;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
         LOGGER.log("onCreate");
-        injector = DaggerInjector.builder().build();
+        applicationComponent = DaggerApplicationComponent.builder().build();
     }
 
-    public Injector getApplicationInjector() {
-        return injector;
+    public ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
     }
 }

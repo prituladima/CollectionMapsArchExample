@@ -1,9 +1,11 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
+import com.prituladima.collectionmapsarchexample.constants.ListImplementation;
+import com.prituladima.collectionmapsarchexample.constants.ListOperation;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static com.prituladima.collectionmapsarchexample.constants.OperationEnumHolder.ListOperationEnumHolder.*;
 
 public class OperationEnumHolderTest {
 
