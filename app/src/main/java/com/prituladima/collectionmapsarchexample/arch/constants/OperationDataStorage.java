@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface OperationDataStorage {
 
-    List<OperationParamHolder> getList();
+    List<OperationParamHolder> get();
 
 }

@@ -1,6 +1,6 @@
 package com.prituladima.collectionmapsarchexample.arch.repository;
 
-import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
 
 import java.util.ArrayList;
@@ -11,10 +11,11 @@ import rx.subjects.PublishSubject;
 public class CollectionRepository implements Repository {
 
     private PublishSubject<Boolean> subject;
-    private ListOperationDataStorage storage;
+    private OperationDataStorage storage;
     private List<CellDTO> data;
 
-    public CollectionRepository(PublishSubject<Boolean> subject, ListOperationDataStorage storage) {
+    public CollectionRepository(PublishSubject<Boolean> subject,
+                                OperationDataStorage storage) {
         this.subject = subject;
         this.storage = storage;
         data = getDefault();
@@ -34,7 +35,7 @@ public class CollectionRepository implements Repository {
     @Override
     public List<CellDTO> getDefault() {
         List<CellDTO> list = new ArrayList<>();
-        for (int i = 0; i < storage.getList().size(); i++) {
+        for (int i = 0; i < storage.get().size(); i++) {
             list.add(new CellDTO(0, false));
         }
         return list;

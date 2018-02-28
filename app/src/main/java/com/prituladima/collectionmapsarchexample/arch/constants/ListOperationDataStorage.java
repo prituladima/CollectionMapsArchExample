@@ -20,7 +20,7 @@ public final class ListOperationDataStorage implements OperationDataStorage {
     }
 
     @Override
-    public synchronized List<OperationParamHolder> getList() {
+    public synchronized List<OperationParamHolder> get() {
         return new ArrayList<>(list);
     }
 

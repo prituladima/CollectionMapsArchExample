@@ -4,43 +4,34 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
-import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
-import com.prituladima.collectionmapsarchexample.arch.operations.OperationExecutor;
+import com.prituladima.collectionmapsarchexample.arch.operations.LifecycleExecutor;
+import com.prituladima.collectionmapsarchexample.arch.operations.LifecycleExecutorProducer;
 import com.prituladima.collectionmapsarchexample.arch.presenter.BasePresenter;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
 
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 
-import static com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder.ListOperationEnumHolder.LIST_NAME;
-
-@Singleton
 public class CollectionPresenters extends BasePresenter<CollectionScreenContractHolder.CollectionView>
         implements CollectionScreenContractHolder.CollectionScreenContract, Action1<Boolean> {
 
-    private Repository repository;
-    private PublishSubject<Boolean> subject;
-    private Subscription subscription;
-    private ExecutorService service;
-    private ListOperationDataStorage storage;
+    private final Repository repository;
+    private final PublishSubject<Boolean> subject;
+    private final LifecycleExecutorProducer executorProduser;
 
-    private OperationExecutor operationExecutor;
+    private LifecycleExecutor operationExecutor;
+    private Subscription subscription;
 
     @Inject
-    public CollectionPresenters(@Named(LIST_NAME) Repository repository,
-                                @Named(LIST_NAME) PublishSubject<Boolean> subject,
-                                ListOperationDataStorage storage) {
+    public CollectionPresenters(Repository repository,
+                                PublishSubject<Boolean> subject,
+                                LifecycleExecutorProducer executorProduser) {
         this.repository = repository;
         this.subject = subject;
-        this.storage = storage;
+        this.executorProduser = executorProduser;
     }
 
     @Override
@@ -65,7 +56,7 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
         } else {
             repository.reset();
             getMvpView().onDataSetChanged(repository.get());
-            operationExecutor = new OperationExecutor.OperationExecutorBuilder(new CountDownLatch(storage.getList().size()), threads, amount, repository, storage).build();
+            operationExecutor = executorProduser.getExecutor(amount, threads);
             operationExecutor.start();
         }
     }

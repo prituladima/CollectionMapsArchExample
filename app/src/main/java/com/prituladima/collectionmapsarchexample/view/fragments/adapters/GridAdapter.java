@@ -10,21 +10,24 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.prituladima.collectionmapsarchexample.R;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.ViewHolder> {
+public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
-    private ListOperationDataStorage storage;
+    private OperationDataStorage storage;
     private List<CellDTO> data = new ArrayList<>();
 
-    public CollectionsAdapter(ListOperationDataStorage storage) {
+    @Inject
+    public GridAdapter(OperationDataStorage storage) {
         this.storage = storage;
     }
 
@@ -42,8 +45,8 @@ public class CollectionsAdapter extends RecyclerView.Adapter<CollectionsAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String impl  = storage.getList().get(position).getImplementation().getImplementation();
-        String oper = storage.getList().get(position).getOperationType().getOperation();
+        String impl  = storage.get().get(position).getImplementation().getImplementation();
+        String oper = storage.get().get(position).getOperationType().getOperation();
 
         holder.labelText.setText(impl + "\n" + oper);
         holder.myTextView.setText(String.valueOf(data.get(position).getTime()));

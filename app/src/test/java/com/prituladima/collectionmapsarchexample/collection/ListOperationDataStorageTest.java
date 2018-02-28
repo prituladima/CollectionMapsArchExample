@@ -1,6 +1,7 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
 import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +13,7 @@ import static org.junit.Assert.*;
 public class ListOperationDataStorageTest {
 
     private static final int EXPECTED_SIZE = 21;
-    private ListOperationDataStorage storage;
+    private OperationDataStorage storage;
 
     @Before
     public void init(){
@@ -21,14 +22,14 @@ public class ListOperationDataStorageTest {
 
     @Test
     public void amountOfRow() {
-        assertEquals(EXPECTED_SIZE, storage.getList().size());
+        assertEquals(EXPECTED_SIZE, storage.get().size());
     }
 
     @Test
     public void immutabilityTest(){
-        List list = storage.getList();
+        List list = storage.get();
         list.clear();
-        assertEquals(EXPECTED_SIZE, storage.getList().size());
+        assertEquals(EXPECTED_SIZE, storage.get().size());
     }
 
 

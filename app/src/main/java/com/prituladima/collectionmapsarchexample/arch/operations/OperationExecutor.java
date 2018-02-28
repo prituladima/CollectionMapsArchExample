@@ -1,8 +1,8 @@
 package com.prituladima.collectionmapsarchexample.arch.operations;
 
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.exceptions.ProcessorIsStillRunningException;
-import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.processor.Processor;
 import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
 import com.prituladima.collectionmapsarchexample.impl.processors.CollectionOperationProcessor;
@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class OperationExecutor implements ExecutorLifecycle{
+public class OperationExecutor implements LifecycleExecutor {
 
     private ExecutorService executorService;
     private List<Runnable> runnableList;
@@ -52,13 +52,13 @@ public class OperationExecutor implements ExecutorLifecycle{
         private int threads;
         private int amount;
         private Repository repository;
-        private ListOperationDataStorage storage;
+        private OperationDataStorage storage;
 
         public OperationExecutorBuilder(CountDownLatch latch,
                                         int threads,
                                         int amount,
                                         Repository repository,
-                                        ListOperationDataStorage storage) {
+                                        OperationDataStorage storage) {
             this.latch = latch;
             this.threads = threads;
             this.amount = amount;
@@ -69,7 +69,7 @@ public class OperationExecutor implements ExecutorLifecycle{
         public OperationExecutor build() {
             ExecutorService executorService = Executors.newFixedThreadPool(threads);
             List<Runnable> runnableList = new ArrayList<>();
-            for (OperationParamHolder holder : storage.getList()) {
+            for (OperationParamHolder holder : storage.get()) {
                 Processor processor = new CollectionOperationProcessor(holder, amount);
                 runnableList.add(new OperationRunnable(processor, holder, amount, repository, latch));
             }

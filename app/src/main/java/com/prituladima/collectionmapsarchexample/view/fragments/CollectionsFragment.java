@@ -18,16 +18,19 @@ import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHo
 import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
 import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
 import com.prituladima.collectionmapsarchexample.impl.presenters.CollectionPresenters;
-import com.prituladima.collectionmapsarchexample.view.fragments.adapters.CollectionsAdapter;
+import com.prituladima.collectionmapsarchexample.view.fragments.adapters.GridAdapter;
 
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder.ListOperationEnumHolder.LIST_NAME;
 
 public class CollectionsFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
 
@@ -43,24 +46,25 @@ public class CollectionsFragment extends Fragment implements CollectionScreenCon
     EditText threadsText;
 
     @Inject
+    @Named(LIST_NAME)
     CollectionPresenters presenter;
 
     @Inject
-    ListOperationDataStorage storage;
+    @Named(LIST_NAME)
+    GridAdapter adapter;
 
-
-    CollectionsAdapter adapter;
-    Unbinder unbinder;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_collections, container, false);
+
+        ((MainApplication) getActivity().getApplication()).getApplicationInjector().inject(this);
         unbinder = ButterKnife.bind(this, rootView);
-        ((MainApplication)getActivity().getApplication()).getApplicationInjector().inject(this);
 
         collectionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        adapter = new CollectionsAdapter(storage);
+
         collectionRecyclerView.setAdapter(adapter);
 
         return rootView;

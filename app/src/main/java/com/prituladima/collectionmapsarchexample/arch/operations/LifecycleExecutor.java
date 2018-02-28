@@ -1,6 +1,6 @@
 package com.prituladima.collectionmapsarchexample.arch.operations;
 
-public interface ExecutorLifecycle {
+public interface LifecycleExecutor {
 
     void start();
 

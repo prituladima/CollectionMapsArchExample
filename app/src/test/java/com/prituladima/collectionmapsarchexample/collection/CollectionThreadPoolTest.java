@@ -1,5 +1,6 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
+import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
 import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
 import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolder;
 import com.prituladima.collectionmapsarchexample.arch.exceptions.ProcessorIsStillRunningException;
@@ -28,7 +29,7 @@ public class CollectionThreadPoolTest {
     private PublishSubject subject;
     private CollectionRepository repository;
     private CountDownLatch countDownLatch;
-    private ListOperationDataStorage storage;
+    private OperationDataStorage storage;
     private List<OperationParamHolder> holders;
 
     @Before
@@ -37,7 +38,7 @@ public class CollectionThreadPoolTest {
         storage = new ListOperationDataStorage();
         repository = new CollectionRepository(subject, storage);
         countDownLatch = new CountDownLatch(EXPECTED_SIZE);
-        holders = storage.getList();
+        holders = storage.get();
     }
 
     @Test

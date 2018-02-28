@@ -12,11 +12,7 @@ import dagger.Component;
 @Singleton
 @Component(
         modules = {
-                ContextModule.class,
-                EventbusModule.class,
-                RepositoryModule.class,
-                OperationDataStorageModule.class
-
+                CollectionScreenModule.class
         }
 )
 public interface Injector {
