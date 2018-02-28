@@ -10,8 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.prituladima.collectionmapsarchexample.R;
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
-import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.entity.CellDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
+public final class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
     private OperationDataStorage storage;
     private List<CellDTO> data = new ArrayList<>();
@@ -45,7 +45,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String impl  = storage.get().get(position).getImplementation().getImplementation();
+        String impl = storage.get().get(position).getImplementation().getImplementation();
         String oper = storage.get().get(position).getOperationType().getOperation();
 
         holder.labelText.setText(impl + "\n" + oper);
@@ -57,9 +57,9 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
         if (data.get(position).isLoading()) {
             holder.progressBar.setVisibility(View.VISIBLE);
-        } else if(data.get(position).getTime() == -1) {
+        } else if (data.get(position).getTime() == -1) {
             holder.collectionsError.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.myTextView.setVisibility(View.VISIBLE);
         }
     }

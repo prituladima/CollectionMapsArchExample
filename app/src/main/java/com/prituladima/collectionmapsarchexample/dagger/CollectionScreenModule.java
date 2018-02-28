@@ -1,12 +1,12 @@
 package com.prituladima.collectionmapsarchexample.dagger;
 
-import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
-import com.prituladima.collectionmapsarchexample.arch.operations.LifecycleExecutorProducer;
-import com.prituladima.collectionmapsarchexample.arch.operations.OperationExecutorProducer;
-import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
-import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
-import com.prituladima.collectionmapsarchexample.impl.presenters.CollectionPresenters;
+import com.prituladima.collectionmapsarchexample.arch.Repository;
+import com.prituladima.collectionmapsarchexample.constants.ListOperationDataStorage;
+import com.prituladima.collectionmapsarchexample.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.operations.LifecycleExecutorProducer;
+import com.prituladima.collectionmapsarchexample.operations.OperationExecutorProducer;
+import com.prituladima.collectionmapsarchexample.presenters.CollectionPresenters;
+import com.prituladima.collectionmapsarchexample.repository.CollectionRepository;
 import com.prituladima.collectionmapsarchexample.view.fragments.adapters.GridAdapter;
 
 import javax.inject.Named;
@@ -16,7 +16,7 @@ import dagger.Module;
 import dagger.Provides;
 import rx.subjects.PublishSubject;
 
-import static com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder.ListOperationEnumHolder.LIST_NAME;
+import static com.prituladima.collectionmapsarchexample.constants.OperationEnumHolder.ListOperationEnumHolder.LIST_NAME;
 
 @Module
 class CollectionScreenModule {

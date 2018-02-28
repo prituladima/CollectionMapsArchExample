@@ -11,9 +11,8 @@ import com.prituladima.collectionmapsarchexample.R;
 
 import butterknife.ButterKnife;
 
-public class MapsFragment extends Fragment{
+public final class MapsFragment extends Fragment {
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_maps, container, false);

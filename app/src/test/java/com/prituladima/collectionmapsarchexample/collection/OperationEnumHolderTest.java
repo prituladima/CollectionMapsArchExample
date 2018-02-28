@@ -3,7 +3,7 @@ package com.prituladima.collectionmapsarchexample.collection;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder.ListOperationEnumHolder.*;
+import static com.prituladima.collectionmapsarchexample.constants.OperationEnumHolder.ListOperationEnumHolder.*;
 
 public class OperationEnumHolderTest {
 

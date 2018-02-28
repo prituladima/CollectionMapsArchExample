@@ -4,9 +4,10 @@ import android.app.Application;
 
 import com.prituladima.collectionmapsarchexample.dagger.DaggerInjector;
 import com.prituladima.collectionmapsarchexample.dagger.Injector;
+import com.prituladima.collectionmapsarchexample.util.Logger;
 
 
-public class MainApplication extends Application {
+public final class MainApplication extends Application {
 
     private Logger LOGGER = Logger.getLogger(MainApplication.class);
 

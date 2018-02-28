@@ -11,13 +11,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.prituladima.collectionmapsarchexample.Logger;
 import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
-import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
-import com.prituladima.collectionmapsarchexample.impl.presenters.CollectionPresenters;
+import com.prituladima.collectionmapsarchexample.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.presenters.CollectionPresenters;
+import com.prituladima.collectionmapsarchexample.util.Logger;
 import com.prituladima.collectionmapsarchexample.view.fragments.adapters.GridAdapter;
 
 import java.util.List;
@@ -30,9 +29,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.prituladima.collectionmapsarchexample.arch.constants.OperationEnumHolder.ListOperationEnumHolder.LIST_NAME;
+import static com.prituladima.collectionmapsarchexample.constants.OperationEnumHolder.ListOperationEnumHolder.LIST_NAME;
 
-public class CollectionsFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
+public final class CollectionsFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
 
     private static final Logger LOGGER = Logger.getLogger(CollectionsFragment.class);
 

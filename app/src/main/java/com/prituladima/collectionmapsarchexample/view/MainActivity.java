@@ -1,17 +1,17 @@
 package com.prituladima.collectionmapsarchexample.view;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.prituladima.collectionmapsarchexample.R;
-import com.prituladima.collectionmapsarchexample.view.adapters.ViewPagerAdapter;
+import com.prituladima.collectionmapsarchexample.view.adapters.TabsAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.main_tabs)
     TabLayout tabLayout;
@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
+        TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(tabsAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 

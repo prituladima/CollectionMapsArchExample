@@ -1,10 +1,10 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
 
-import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
-import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
-import com.prituladima.collectionmapsarchexample.arch.repository.Repository;
+import com.prituladima.collectionmapsarchexample.arch.Repository;
+import com.prituladima.collectionmapsarchexample.constants.ListOperationDataStorage;
+import com.prituladima.collectionmapsarchexample.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.repository.CollectionRepository;
 
 import org.junit.Before;
 import org.junit.Test;

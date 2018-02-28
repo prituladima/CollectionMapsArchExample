@@ -1,12 +1,12 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
-import com.prituladima.collectionmapsarchexample.arch.constants.OperationDataStorage;
-import com.prituladima.collectionmapsarchexample.arch.entity.CellDTO;
-import com.prituladima.collectionmapsarchexample.arch.entity.OperationParamHolder;
-import com.prituladima.collectionmapsarchexample.arch.exceptions.ProcessorIsStillRunningException;
-import com.prituladima.collectionmapsarchexample.arch.operations.OperationExecutor;
-import com.prituladima.collectionmapsarchexample.arch.repository.CollectionRepository;
-import com.prituladima.collectionmapsarchexample.arch.constants.ListOperationDataStorage;
+import com.prituladima.collectionmapsarchexample.constants.OperationDataStorage;
+import com.prituladima.collectionmapsarchexample.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.entity.OperationParamHolder;
+import com.prituladima.collectionmapsarchexample.exceptions.ProcessorIsStillRunningException;
+import com.prituladima.collectionmapsarchexample.operations.OperationExecutor;
+import com.prituladima.collectionmapsarchexample.repository.CollectionRepository;
+import com.prituladima.collectionmapsarchexample.constants.ListOperationDataStorage;
 
 import org.junit.Before;
 import org.junit.Test;
