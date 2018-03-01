@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.R;
+import com.prituladima.collectionmapsarchexample.anotations.ForListScreen;
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
 import com.prituladima.collectionmapsarchexample.entity.CellDTO;
 import com.prituladima.collectionmapsarchexample.presenters.CollectionPresenters;
@@ -45,11 +46,11 @@ public final class CollectionsFragment extends Fragment implements CollectionScr
     EditText threadsText;
 
     @Inject
-    @Named(LIST_QUALIFIER)
+    @ForListScreen
     CollectionPresenters presenter;
 
     @Inject
-    @Named(LIST_QUALIFIER)
+    @ForListScreen
     GridAdapter adapter;
 
     private Unbinder unbinder;

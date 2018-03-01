@@ -1,5 +1,6 @@
 package com.prituladima.collectionmapsarchexample.dagger;
 
+import com.prituladima.collectionmapsarchexample.anotations.ForListScreen;
 import com.prituladima.collectionmapsarchexample.arch.Repository;
 import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStorage;
 import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
@@ -23,40 +24,41 @@ class CollectionScreenModule {
 
     //1
     @Provides
-    @Named(LIST_QUALIFIER)
-    GridAdapter provideListGridAdapter(@Named(LIST_QUALIFIER) TasksInfoStorage storage) {
+    @ForListScreen
+    GridAdapter provideListGridAdapter(@ForListScreen TasksInfoStorage storage) {
         return new GridAdapter(storage);
     }
 
     //2
     @Provides
     @Singleton
-    @Named(LIST_QUALIFIER)
-    CollectionPresenters provideCollectionPresenters(@Named(LIST_QUALIFIER) Repository repository,
-                                                     @Named(LIST_QUALIFIER) PublishSubject<Boolean> subject,
-                                                     LifecycleExecutorProducer executorProduser) {
+    @ForListScreen
+    CollectionPresenters provideCollectionPresenters(@ForListScreen Repository repository,
+                                                     @ForListScreen PublishSubject<Boolean> subject,
+                                                     @ForListScreen LifecycleExecutorProducer executorProduser) {
         return new CollectionPresenters(repository, subject, executorProduser);
     }
 
     @Provides
-    LifecycleExecutorProducer providesLifecycleExecutorProducer(@Named(LIST_QUALIFIER) Repository repository,
-                                                                @Named(LIST_QUALIFIER) TasksInfoStorage storage) {
+    @ForListScreen
+    LifecycleExecutorProducer providesLifecycleExecutorProducer(@ForListScreen Repository repository,
+                                                                @ForListScreen TasksInfoStorage storage) {
         return new OperationExecutorProducer(repository, storage);
     }
 
 
     @Provides
     @Singleton
-    @Named(LIST_QUALIFIER)
-    Repository provideCollectionRepository(@Named(LIST_QUALIFIER) PublishSubject<Boolean> subject,
-                                           @Named(LIST_QUALIFIER) TasksInfoStorage storage) {
+    @ForListScreen
+    Repository provideCollectionRepository(@ForListScreen PublishSubject<Boolean> subject,
+                                           @ForListScreen TasksInfoStorage storage) {
         return new CollectionRepository(subject, storage);
     }
 
     //leaf
     @Provides
     @Singleton
-    @Named(LIST_QUALIFIER)
+    @ForListScreen
     TasksInfoStorage provideOperationDataStorage() {
         return new ListTasksInfoStorage();
     }
@@ -64,7 +66,7 @@ class CollectionScreenModule {
     //leaf
     @Singleton
     @Provides
-    @Named(LIST_QUALIFIER)
+    @ForListScreen
     PublishSubject<Boolean> providesCollectionPublishSubject() {
         return PublishSubject.create();
     }

@@ -60,10 +60,19 @@ public final class OperationExecutor implements LifecycleExecutor {
                                         int amount,
                                         Repository repository,
                                         TasksInfoStorage storage) {
+            if(latch == null) throw new IllegalArgumentException("Must not be null");
             this.latch = latch;
+
+//            if (threads <= 0) throw new IllegalArgumentException("Must not be < 0!!!");
             this.threads = threads;
+
+            if (amount <= 0) throw new IllegalArgumentException("Must not be < 0!!!");
             this.amount = amount;
+
+            if(repository == null) throw new IllegalArgumentException("Must not be null");
             this.repository = repository;
+
+            if(storage == null) throw new IllegalArgumentException("Must not be null");
             this.storage = storage;
         }
 

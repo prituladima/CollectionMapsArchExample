@@ -1,8 +1,8 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
 import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStorage;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
 import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
+import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
 import com.prituladima.collectionmapsarchexample.entity.CellDTO;
 import com.prituladima.collectionmapsarchexample.exceptions.ProcessorIsStillRunningException;
 import com.prituladima.collectionmapsarchexample.operations.OperationExecutor;
@@ -14,7 +14,9 @@ import org.junit.Test;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import rx.observers.TestSubscriber;
 import rx.subjects.PublishSubject;
+import rx.subjects.TestSubject;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,16 +26,16 @@ public class CollectionThreadPoolTest {
     private static final int EXPECTED_SIZE = 21;
 
     private static final int THREADS = 4;
-    private static final int AMOUNT = 10_000;
+    private static final int AMOUNT = 10000;
 
-    private PublishSubject subject;
+    private PublishSubject<Boolean> subject;
     private CollectionRepository repository;
     private CountDownLatch countDownLatch;
     private TasksInfoStorage storage;
     private List<TaskInfo> holders;
 
     @Before
-    public void init(){
+    public void init() {
         subject = PublishSubject.create();
         storage = new ListTasksInfoStorage();
         repository = new CollectionRepository(subject, storage);
@@ -42,12 +44,12 @@ public class CollectionThreadPoolTest {
     }
 
     @Test
-    public void amountInStorageTest() {
+    public void testAmountInStorageTest() {
         assertEquals(EXPECTED_SIZE, holders.size());
     }
 
     @Test
-    public void threadPoolRunningTest() throws InterruptedException{
+    public void testThreadPoolRunningTest() throws InterruptedException {
 
         OperationExecutor operationExecutor =
                 new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, AMOUNT, repository, storage).build();
@@ -63,10 +65,16 @@ public class CollectionThreadPoolTest {
             assertFalse(cell.isLoading());
         }
 
+//        TestSubscriber<Boolean> testSubscriber = new TestSubscriber<>();
+//        subject.subscribe(testSubscriber);
+
+//        testSubscriber.assertCompleted();
+//        testSubscriber.awaitTerminalEvent();
+
     }
 
     @Test(expected = ProcessorIsStillRunningException.class)
-    public void threadPoolRunningTwice() {
+    public void testThreadPoolRunningTwice() {
 
         OperationExecutor operationExecutor =
                 new OperationExecutor.OperationExecutorBuilder(new CountDownLatch(EXPECTED_SIZE), THREADS, AMOUNT, repository, storage).build();
@@ -76,9 +84,9 @@ public class CollectionThreadPoolTest {
     }
 
     @Test(timeout = 1_000)
-    public void threadStopped() throws InterruptedException{
+    public void testThreadStopped() throws InterruptedException {
 
-        CountDownLatch countDownLatch =  new CountDownLatch(EXPECTED_SIZE);
+        CountDownLatch countDownLatch = new CountDownLatch(EXPECTED_SIZE);
 
         assertEquals(EXPECTED_SIZE, countDownLatch.getCount());
 
@@ -95,9 +103,9 @@ public class CollectionThreadPoolTest {
     }
 
     @Test(expected = ProcessorIsStillRunningException.class)
-    public void threadStoppedAndRunAgain() throws InterruptedException{
+    public void testThreadStoppedAndRunAgain() throws InterruptedException {
 
-        CountDownLatch countDownLatch =  new CountDownLatch(EXPECTED_SIZE);
+        CountDownLatch countDownLatch = new CountDownLatch(EXPECTED_SIZE);
 
 
         OperationExecutor operationExecutor =
@@ -110,9 +118,9 @@ public class CollectionThreadPoolTest {
     }
 
     @Test
-    public void threadStoppedTwice() throws InterruptedException{
+    public void testThreadStoppedTwice() throws InterruptedException {
 
-        CountDownLatch countDownLatch =  new CountDownLatch(EXPECTED_SIZE);
+        CountDownLatch countDownLatch = new CountDownLatch(EXPECTED_SIZE);
 
 
         OperationExecutor operationExecutor =
@@ -130,4 +138,52 @@ public class CollectionThreadPoolTest {
         assertFalse(operationExecutor.isRunning());
     }
 
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCountDownLatchError() throws InterruptedException {
+
+        CountDownLatch countDownLatch = new CountDownLatch(-1);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCountDownLatchNullError() throws InterruptedException {
+
+        OperationExecutor operationExecutor =
+                new OperationExecutor.OperationExecutorBuilder(null, THREADS, AMOUNT, repository, storage).build();
+
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIllegalThreadsAmountError() {
+
+        CountDownLatch countDownLatch = new CountDownLatch(EXPECTED_SIZE);
+
+        new OperationExecutor.OperationExecutorBuilder(countDownLatch, -20, AMOUNT, repository, storage).build();
+
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIllegalTasksAmountError() {
+
+        CountDownLatch countDownLatch = new CountDownLatch(EXPECTED_SIZE);
+        new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, -20, repository, storage).build();
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRepositoryNullError(){
+        CountDownLatch countDownLatch = new CountDownLatch(EXPECTED_SIZE);
+        new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, AMOUNT, null, storage).build();
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void threadCreatedWithError(){
+        CountDownLatch countDownLatch = new CountDownLatch(EXPECTED_SIZE);
+        new OperationExecutor.OperationExecutorBuilder(countDownLatch, THREADS, AMOUNT, repository, null).build();
+    }
 }
