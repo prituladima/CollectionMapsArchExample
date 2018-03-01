@@ -20,7 +20,7 @@ public class CollectionRepository implements Repository {
                                 TasksInfoStorage storage) {
         this.subject = subject;
         this.storage = storage;
-        data = getDefault();
+        reset();
     }
 
     @Override

@@ -39,7 +39,7 @@ class CollectionScreenModule {
     }
 
     @Provides
-    LifecycleExecutorProducer providesLifecycleExecutorProduser(@Named(LIST_QUALIFIER) Repository repository,
+    LifecycleExecutorProducer providesLifecycleExecutorProducer(@Named(LIST_QUALIFIER) Repository repository,
                                                                 @Named(LIST_QUALIFIER) TasksInfoStorage storage) {
         return new OperationExecutorProducer(repository, storage);
     }

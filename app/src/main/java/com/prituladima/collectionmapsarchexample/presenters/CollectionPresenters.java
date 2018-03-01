@@ -7,7 +7,7 @@ import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHo
 import com.prituladima.collectionmapsarchexample.arch.Repository;
 import com.prituladima.collectionmapsarchexample.operations.LifecycleExecutor;
 import com.prituladima.collectionmapsarchexample.operations.LifecycleExecutorProducer;
-import com.prituladima.collectionmapsarchexample.presenter.BasePresenter;
+import com.prituladima.collectionmapsarchexample.arch.BasePresenter;
 
 import javax.inject.Inject;
 
@@ -20,7 +20,7 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
 
     private final Repository repository;
     private final PublishSubject<Boolean> subject;
-    private final LifecycleExecutorProducer executorProduser;
+    private final LifecycleExecutorProducer executorProducer;
 
     private LifecycleExecutor operationExecutor;
     private Subscription subscription;
@@ -28,10 +28,10 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
     @Inject
     public CollectionPresenters(Repository repository,
                                 PublishSubject<Boolean> subject,
-                                LifecycleExecutorProducer executorProduser) {
+                                LifecycleExecutorProducer executorProducer) {
         this.repository = repository;
         this.subject = subject;
-        this.executorProduser = executorProduser;
+        this.executorProducer = executorProducer;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
         } else {
             repository.reset();
             getMvpView().onDataSetChanged(repository.get());
-            operationExecutor = executorProduser.getExecutor(amount, threads);
+            operationExecutor = executorProducer.getExecutor(amount, threads);
             operationExecutor.start();
         }
     }

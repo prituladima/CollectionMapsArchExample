@@ -1,6 +1,4 @@
-package com.prituladima.collectionmapsarchexample.presenter;
-
-import com.prituladima.collectionmapsarchexample.arch.MVPView;
+package com.prituladima.collectionmapsarchexample.arch;
 
 public abstract class BasePresenter<T extends MVPView> implements Presenter<T> {
 
@@ -16,20 +14,20 @@ public abstract class BasePresenter<T extends MVPView> implements Presenter<T> {
         mMvpView = null;
     }
 
-    public boolean isViewAttached() {
+    protected boolean isViewAttached() {
         return mMvpView != null;
     }
 
-    public T getMvpView() {
+    protected T getMvpView() {
         return mMvpView;
     }
 
-    public void checkIfViewAttached() {
+    protected void checkIfViewAttached() {
         if (!isViewAttached()) throw new MvpViewNotAttachedException();
     }
 
-    public static class MvpViewNotAttachedException extends RuntimeException {
-        public MvpViewNotAttachedException() {
+    private static class MvpViewNotAttachedException extends RuntimeException {
+        MvpViewNotAttachedException() {
             super("Please call Presenter.attachView(MvpView) before" +
                     " requesting data to the Presenter");
         }

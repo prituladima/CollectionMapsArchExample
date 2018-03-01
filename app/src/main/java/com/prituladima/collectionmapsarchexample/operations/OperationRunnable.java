@@ -11,15 +11,16 @@ import java.util.concurrent.CountDownLatch;
 public final class OperationRunnable implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(OperationRunnable.class);
-    private TaskInfo holder;
-    private int amount;
-    private Repository repository;
-    private CountDownLatch countDownLatch;
-    private Processor processor;
 
-    public OperationRunnable(Processor processor, TaskInfo holder, int amount, Repository repository, CountDownLatch countDownLatch) {
-        this.holder = holder;
-        this.amount = amount;
+    private final TaskInfo info;
+    private final int position;
+    private final Repository repository;
+    private final CountDownLatch countDownLatch;
+    private final Processor processor;
+
+    public OperationRunnable(Processor processor, TaskInfo info, Repository repository, CountDownLatch countDownLatch) {
+        this.info = info;
+        this.position  = info.getPositionInStorage();
         this.repository = repository;
         this.countDownLatch = countDownLatch;
         this.processor = processor;
@@ -27,20 +28,20 @@ public final class OperationRunnable implements Runnable {
 
     @Override
     public void run() {
-        Long time = 0L;
+        long time = 0L;
         try {
-            repository.put(holder.getPositionInStorage(), time, true, false);
+            repository.put(position, time, true, false);
             time = processor.execute();
-            repository.put(holder.getPositionInStorage(), time, false, false);
+            repository.put(position, time, false, false);
         } catch (Throwable throwable) {
             time = -1L;
-            repository.put(holder.getPositionInStorage(), time, false, false);
-            System.out.println(throwable);
+            repository.put(position, time, false, false);
+            LOGGER.error(throwable);
         } finally {
-            LOGGER.log(" --- " + new CellDTO(time, false) + " --- " + holder);
+            LOGGER.log(" --- " + new CellDTO(time, false) + " --- " + info);
             countDownLatch.countDown();
             if (countDownLatch.getCount() == 0L) {
-                repository.put(holder.getPositionInStorage(), time, false, true);
+                repository.put(position, time, false, true);
             }
         }
     }

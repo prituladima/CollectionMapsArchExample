@@ -72,7 +72,7 @@ public final class OperationExecutor implements LifecycleExecutor {
             List<Runnable> runnableList = new ArrayList<>();
             for (TaskInfo holder : storage.get()) {
                 Processor processor = new CollectionOperationProcessor(holder, amount);
-                runnableList.add(new OperationRunnable(processor, holder, amount, repository, latch));
+                runnableList.add(new OperationRunnable(processor, holder, repository, latch));
             }
 
             return new OperationExecutor(executorService, runnableList, latch);

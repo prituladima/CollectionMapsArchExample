@@ -1,4 +1,4 @@
-package com.prituladima.collectionmapsarchexample.presenter;
+package com.prituladima.collectionmapsarchexample.arch;
 
 public interface Presenter<T> {
 
