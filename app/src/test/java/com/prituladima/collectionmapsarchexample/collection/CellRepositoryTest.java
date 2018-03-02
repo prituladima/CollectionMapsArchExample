@@ -2,9 +2,9 @@ package com.prituladima.collectionmapsarchexample.collection;
 
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
-import com.prituladima.collectionmapsarchexample.constants.ListTasksInfoStorage;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
-import com.prituladima.collectionmapsarchexample.repository.CollectionRepository;
+import com.prituladima.collectionmapsarchexample.repository.ListTasksInfoStorage;
+import com.prituladima.collectionmapsarchexample.arch.TasksInfoStorage;
+import com.prituladima.collectionmapsarchexample.repository.CellRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import rx.subjects.PublishSubject;
 
 import static org.junit.Assert.assertEquals;
 
-public class CollectionRepositoryTest {
+public class CellRepositoryTest {
 
     private static final int EXPECTED_SIZE = 21;
 
@@ -27,7 +27,7 @@ public class CollectionRepositoryTest {
     public void init(){
         publishSubject = PublishSubject.create();
         storage  = new ListTasksInfoStorage();
-        repository = new CollectionRepository(publishSubject, storage);
+        repository = new CellRepository(publishSubject, storage);
     }
 
     @Test

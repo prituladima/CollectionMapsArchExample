@@ -1,11 +1,11 @@
-package com.prituladima.collectionmapsarchexample.entity;
+package com.prituladima.collectionmapsarchexample.entities;
 
-public final class CellDTO {
+public final class Cell {
 
     private final long time;
     private final boolean isLoading;
 
-    public CellDTO(long time, boolean isLoading) {
+    public Cell(long time, boolean isLoading) {
         this.time = time;
         this.isLoading = isLoading;
     }
@@ -20,7 +20,7 @@ public final class CellDTO {
 
     @Override
     public String toString() {
-        return "CellDTO{" +
+        return "Cell{" +
                 "time=" + time +
                 ", isLoading=" + isLoading +
                 '}';

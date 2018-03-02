@@ -1,13 +1,10 @@
 package com.prituladima.collectionmapsarchexample.processors;
 
-import com.prituladima.collectionmapsarchexample.constants.ListTypes;
-import com.prituladima.collectionmapsarchexample.constants.ListTasks;
-import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
+import com.prituladima.collectionmapsarchexample.constants.ListDataType;
+import com.prituladima.collectionmapsarchexample.constants.ListTaskType;
+import com.prituladima.collectionmapsarchexample.entities.TaskInfo;
 import com.prituladima.collectionmapsarchexample.exceptions.NoSuchImplementationException;
 import com.prituladima.collectionmapsarchexample.exceptions.NoSuchOperationException;
-import com.prituladima.collectionmapsarchexample.processor.CollectionProcessor;
-import com.prituladima.collectionmapsarchexample.processor.ImplementationProvider;
-import com.prituladima.collectionmapsarchexample.processor.PreparedDataProvider;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,24 +13,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.prituladima.collectionmapsarchexample.util.TimeUtil.getNow;
 
-public class CollectionOperationProcessor implements
-        CollectionProcessor,
-        ImplementationProvider<List<Integer>>,
-        PreparedDataProvider<List<Integer>> {
+public final class CollectionOperationProcessor implements
+        CollectionProcessor, DataTypeStorage<List<Integer>>, PreparedDataStorage<List<Integer>> {
 
-    private final ListTypes implementation;
-    private final ListTasks operation;
+    private final ListDataType implementation;
+    private final ListTaskType operation;
     private final int amount;
 
     public CollectionOperationProcessor(TaskInfo holder, int amount) {
-        this.implementation = (ListTypes) holder.getTypes();
+        this.implementation = (ListDataType) holder.getDataType();
         this.amount = amount;
-        this.operation = (ListTasks) holder.getTaskType();
+        this.operation = (ListTaskType) holder.getTaskType();
     }
 
     @Override
     public long addInTheHead() {
-        List<Integer> list = getImplementationPrototype();
+        List<Integer> list = getNew();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.add(0, i);
@@ -44,7 +39,7 @@ public class CollectionOperationProcessor implements
 
     @Override
     public long addInTheTail() {
-        List<Integer> list = getImplementationPrototype();
+        List<Integer> list = getNew();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.add(i);
@@ -55,7 +50,7 @@ public class CollectionOperationProcessor implements
 
     @Override
     public long addInTheMiddle() {
-        List<Integer> list = getImplementationPrototype();
+        List<Integer> list = getNew();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.add(list.size() / 2, i);
@@ -66,7 +61,7 @@ public class CollectionOperationProcessor implements
 
     @Override
     public long removeFromTheHead() {
-        List<Integer> list = getPreparedData();
+        List<Integer> list = getPrepared();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.remove(0);
@@ -77,7 +72,7 @@ public class CollectionOperationProcessor implements
 
     @Override
     public long removeFromTheTail() {
-        List<Integer> list = getPreparedData();
+        List<Integer> list = getPrepared();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.remove(list.size() - 1);
@@ -89,7 +84,7 @@ public class CollectionOperationProcessor implements
     @Override
     public long removeFromMiddle() {
 
-        List<Integer> list = getPreparedData();
+        List<Integer> list = getPrepared();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.remove(list.size() / 2);
@@ -100,7 +95,7 @@ public class CollectionOperationProcessor implements
 
     @Override
     public long search() {
-        List<Integer> list = getPreparedData();
+        List<Integer> list = getPrepared();
         long start = getNow();
         for (int i = 0; i < amount; i++) {
             list.indexOf(1);
@@ -110,8 +105,8 @@ public class CollectionOperationProcessor implements
     }
 
     @Override
-    public List<Integer> getPreparedData() {
-        List<Integer> prepared = getImplementationPrototype();
+    public List<Integer> getPrepared() {
+        List<Integer> prepared = getNew();
         for (int i = 0; i < amount; i++) {
             prepared.add(i);
         }
@@ -119,7 +114,7 @@ public class CollectionOperationProcessor implements
     }
 
     @Override
-    public List<Integer> getImplementationPrototype() {
+    public List<Integer> getNew() {
         switch (implementation) {
             case ARRAY_LIST:
                 return new ArrayList<>();
@@ -141,14 +136,13 @@ public class CollectionOperationProcessor implements
                 return addInTheMiddle();
             case ADD_IN_THE_TAIL:
                 return addInTheTail();
-
             case REMOVE_FROM_HEAD:
                 return removeFromTheHead();
             case REMOVE_FROM_MIDDLE:
                 return removeFromMiddle();
             case REMOVE_FROM_TAIL:
                 return removeFromTheTail();
-            case SEARCH:
+            case SEARCH_BY_INDEX:
                 return search();
             default:
                 throw new NoSuchOperationException();

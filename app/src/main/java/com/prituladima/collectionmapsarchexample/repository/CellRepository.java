@@ -1,23 +1,23 @@
 package com.prituladima.collectionmapsarchexample.repository;
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
-import com.prituladima.collectionmapsarchexample.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.arch.TasksInfoStorage;
+import com.prituladima.collectionmapsarchexample.entities.Cell;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.subjects.PublishSubject;
 
-public class CollectionRepository implements Repository {
+public final class CellRepository implements Repository {
 
     private final PublishSubject<Boolean> subject;
     private final TasksInfoStorage storage;
 
-    private List<CellDTO> data;
+    private List<Cell> data;
 
-    public CollectionRepository(PublishSubject<Boolean> subject,
-                                TasksInfoStorage storage) {
+    public CellRepository(PublishSubject<Boolean> subject,
+                          TasksInfoStorage storage) {
         this.subject = subject;
         this.storage = storage;
         reset();
@@ -25,20 +25,20 @@ public class CollectionRepository implements Repository {
 
     @Override
     public synchronized void put(int position, long time, boolean isLoading, boolean isLast) {
-        data.set(position, new CellDTO(time, isLoading));
+        data.set(position, new Cell(time, isLoading));
         subject.onNext(isLast);
     }
 
     @Override
-    public synchronized List<CellDTO> get() {
+    public synchronized List<Cell> get() {
         return new ArrayList<>(data);
     }
 
-    @Override
-    public List<CellDTO> getDefault() {
-        List<CellDTO> list = new ArrayList<>();
+
+    private List<Cell> getDefault() {
+        List<Cell> list = new ArrayList<>();
         for (int i = 0; i < storage.get().size(); i++) {
-            list.add(new CellDTO(0, false));
+            list.add(new Cell(0, false));
         }
         return list;
     }

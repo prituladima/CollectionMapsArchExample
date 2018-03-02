@@ -1,9 +1,9 @@
 package com.prituladima.collectionmapsarchexample.operations;
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
-import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
-import com.prituladima.collectionmapsarchexample.entity.CellDTO;
-import com.prituladima.collectionmapsarchexample.processor.Processor;
+import com.prituladima.collectionmapsarchexample.entities.TaskInfo;
+import com.prituladima.collectionmapsarchexample.entities.Cell;
+import com.prituladima.collectionmapsarchexample.processors.Processor;
 import com.prituladima.collectionmapsarchexample.util.Logger;
 
 import java.util.concurrent.CountDownLatch;
@@ -38,7 +38,7 @@ public final class OperationRunnable implements Runnable {
             repository.put(position, time, false, false);
             LOGGER.error(throwable);
         } finally {
-            LOGGER.log(" --- " + new CellDTO(time, false) + " --- " + info);
+            LOGGER.log(" --- " + new Cell(time, false) + " --- " + info);
             countDownLatch.countDown();
             if (countDownLatch.getCount() == 0L) {
                 repository.put(position, time, false, true);

@@ -1,6 +1,6 @@
 package com.prituladima.collectionmapsarchexample.constants;
 
-public interface Tasks {
+public interface DataType {
 
     String get();
 

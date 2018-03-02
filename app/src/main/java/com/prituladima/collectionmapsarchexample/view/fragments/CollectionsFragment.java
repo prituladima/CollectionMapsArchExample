@@ -15,7 +15,7 @@ import com.prituladima.collectionmapsarchexample.MainApplication;
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.anotations.ForListScreen;
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
-import com.prituladima.collectionmapsarchexample.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.entities.Cell;
 import com.prituladima.collectionmapsarchexample.presenters.CollectionPresenters;
 import com.prituladima.collectionmapsarchexample.util.Logger;
 import com.prituladima.collectionmapsarchexample.view.fragments.adapters.GridAdapter;
@@ -23,14 +23,11 @@ import com.prituladima.collectionmapsarchexample.view.fragments.adapters.GridAda
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static com.prituladima.collectionmapsarchexample.constants.Qualifiers.LIST_QUALIFIER;
 
 public final class CollectionsFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
 
@@ -58,7 +55,7 @@ public final class CollectionsFragment extends Fragment implements CollectionScr
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_collections, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_layout, container, false);
 
         ((MainApplication) getActivity().getApplication()).getApplicationComponent().inject(this);
         unbinder = ButterKnife.bind(this, rootView);
@@ -102,14 +99,14 @@ public final class CollectionsFragment extends Fragment implements CollectionScr
     }
 
     @Override
-    public void onDataSetChanged(List<CellDTO> list) {
+    public void onDataSetChanged(List<Cell> list) {
         LOGGER.log(list.toString());
         adapter.setData(list);
     }
 
     @Override
     public void onDataIsStillLoadingError() {
-        Toast.makeText(getActivity(), "ListTasks is still running!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "ListTaskType is still running!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

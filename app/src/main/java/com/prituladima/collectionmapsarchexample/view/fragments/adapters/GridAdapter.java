@@ -10,8 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.prituladima.collectionmapsarchexample.R;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
-import com.prituladima.collectionmapsarchexample.entity.CellDTO;
+import com.prituladima.collectionmapsarchexample.arch.TasksInfoStorage;
+import com.prituladima.collectionmapsarchexample.entities.Cell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +24,14 @@ import butterknife.ButterKnife;
 public final class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
     private TasksInfoStorage storage;
-    private List<CellDTO> data = new ArrayList<>();
+    private List<Cell> data = new ArrayList<>();
 
     @Inject
     public GridAdapter(TasksInfoStorage storage) {
         this.storage = storage;
     }
 
-    public synchronized void setData(List<CellDTO> listOfResult) {
+    public synchronized void setData(List<Cell> listOfResult) {
         data.clear();
         data.addAll(listOfResult);
         notifyDataSetChanged();
@@ -39,14 +39,14 @@ public final class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_of_collections, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_cell_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String impl = storage.get().get(position).getTypes().get();
-        String oper = storage.get().get(position).getTaskType().get();
+        String impl = storage.get().get(position).getDataType().get();
+        String oper = storage.get().get(position).getTaskType().value();
 
         holder.labelText.setText(impl + "\n" + oper);
         holder.myTextView.setText(String.valueOf(data.get(position).getTime()));

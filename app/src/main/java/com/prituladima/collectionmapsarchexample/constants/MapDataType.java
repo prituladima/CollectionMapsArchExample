@@ -1,12 +1,12 @@
 package com.prituladima.collectionmapsarchexample.constants;
 
-public enum MapTypes implements Types {
+public enum MapDataType implements DataType {
     HASH_MAP("HashMap"),
     THREE_MAP("ThreeMap");
 
     String implementation;
 
-    MapTypes(String implementation) {
+    MapDataType(String implementation) {
         this.implementation = implementation;
     }
 

@@ -1,18 +1,18 @@
 package com.prituladima.collectionmapsarchexample.constants;
 
-public enum MapTasks implements Tasks {
+public enum MapTaskType implements TaskType {
     ADDING_NEW("Adding new"),
     SEARCH_BY_KEY("Search by key"),
     REMOVING("Removing");
 
     private String operation;
 
-    MapTasks(String operation) {
+    MapTaskType(String operation) {
         this.operation = operation;
     }
 
     @Override
-    public String get() {
+    public String value() {
         return operation;
     }
 

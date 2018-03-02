@@ -1,7 +1,7 @@
 package com.prituladima.collectionmapsarchexample.collection;
 
-import com.prituladima.collectionmapsarchexample.constants.ListTypes;
-import com.prituladima.collectionmapsarchexample.constants.ListTasks;
+import com.prituladima.collectionmapsarchexample.constants.ListDataType;
+import com.prituladima.collectionmapsarchexample.constants.ListTaskType;
 
 import org.junit.Test;
 
@@ -15,12 +15,12 @@ public class TaskEnumHolderTest {
 
     @Test
     public void amountOfOperation(){
-        assertEquals(EXPECTED_AMOUNT_OF_OPERATION, ListTasks.values().length);
+        assertEquals(EXPECTED_AMOUNT_OF_OPERATION, ListTaskType.values().length);
     }
 
     @Test
     public void amountOfImplementation(){
-        assertEquals(EXPECTED_AMOUNT_OF_IMPLEMENTATION, ListTypes.values().length);
+        assertEquals(EXPECTED_AMOUNT_OF_IMPLEMENTATION, ListDataType.values().length);
     }
 
 }

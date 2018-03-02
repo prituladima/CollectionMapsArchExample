@@ -1,11 +1,11 @@
 package com.prituladima.collectionmapsarchexample.operations;
 
 import com.prituladima.collectionmapsarchexample.arch.Repository;
-import com.prituladima.collectionmapsarchexample.constants.TaskInfo;
-import com.prituladima.collectionmapsarchexample.constants.TasksInfoStorage;
+import com.prituladima.collectionmapsarchexample.entities.TaskInfo;
+import com.prituladima.collectionmapsarchexample.arch.TasksInfoStorage;
 import com.prituladima.collectionmapsarchexample.exceptions.ProcessorIsStillRunningException;
-import com.prituladima.collectionmapsarchexample.processor.Processor;
-import com.prituladima.collectionmapsarchexample.processors.CollectionOperationProcessor;
+import com.prituladima.collectionmapsarchexample.processors.Processor;
+import com.prituladima.collectionmapsarchexample.processors.factory.ProcessorFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,16 +54,17 @@ public final class OperationExecutor implements LifecycleExecutor {
         private final int amount;
         private final Repository repository;
         private final TasksInfoStorage storage;
+        private final ProcessorFactory factory;
 
         public OperationExecutorBuilder(CountDownLatch latch,
                                         int threads,
                                         int amount,
                                         Repository repository,
-                                        TasksInfoStorage storage) {
+                                        TasksInfoStorage storage,
+                                        ProcessorFactory factory) {
             if(latch == null) throw new IllegalArgumentException("Must not be null");
             this.latch = latch;
 
-//            if (threads <= 0) throw new IllegalArgumentException("Must not be < 0!!!");
             this.threads = threads;
 
             if (amount <= 0) throw new IllegalArgumentException("Must not be < 0!!!");
@@ -74,13 +75,17 @@ public final class OperationExecutor implements LifecycleExecutor {
 
             if(storage == null) throw new IllegalArgumentException("Must not be null");
             this.storage = storage;
+
+            if(factory == null) throw new IllegalArgumentException("Must not be null");
+            this.factory = factory;
+
         }
 
         public OperationExecutor build() {
             ExecutorService executorService = Executors.newFixedThreadPool(threads);
             List<Runnable> runnableList = new ArrayList<>();
             for (TaskInfo holder : storage.get()) {
-                Processor processor = new CollectionOperationProcessor(holder, amount);
+                Processor processor = factory.getNewInstance(holder, amount);
                 runnableList.add(new OperationRunnable(processor, holder, repository, latch));
             }
 

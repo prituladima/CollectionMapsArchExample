@@ -1,4 +1,4 @@
-package com.prituladima.collectionmapsarchexample.processor;
+package com.prituladima.collectionmapsarchexample.processors;
 
 public interface CollectionProcessor extends Processor {
 
