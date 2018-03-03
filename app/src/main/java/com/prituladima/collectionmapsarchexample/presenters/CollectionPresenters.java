@@ -21,6 +21,7 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
     private final Repository repository;
     private final PublishSubject<Boolean> subject;
     private final LifecycleExecutorProducer executorProducer;
+    private final boolean isTest;
 
     private LifecycleExecutor operationExecutor;
     private Subscription subscription;
@@ -28,10 +29,12 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
     @Inject
     public CollectionPresenters(Repository repository,
                                 PublishSubject<Boolean> subject,
-                                LifecycleExecutorProducer executorProducer) {
+                                LifecycleExecutorProducer executorProducer,
+                                boolean isTest) {
         this.repository = repository;
         this.subject = subject;
         this.executorProducer = executorProducer;
+        this.isTest = isTest;
     }
 
     @Override
@@ -68,13 +71,16 @@ public class CollectionPresenters extends BasePresenter<CollectionScreenContract
 
     @Override
     public void call(Boolean isLast) {
-        new Handler(Looper.getMainLooper()).post(() ->
-                {
-                    if (getMvpView() != null)
-                        getMvpView().onDataSetChanged(repository.get());
-                    if (isLast)
-                        getMvpView().onCalculationFinished();
-                }
-        );
+        if(isTest)
+            publish(isLast);
+        else
+            new Handler(Looper.getMainLooper()).post(() -> publish(isLast));
+    }
+
+    private void publish(Boolean isLast){
+        if (getMvpView() != null)
+            getMvpView().onDataSetChanged(repository.get());
+        if (isLast)
+            getMvpView().onCalculationFinished();
     }
 }

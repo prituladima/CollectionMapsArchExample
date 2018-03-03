@@ -38,7 +38,7 @@ public class MapScreenModule {
     CollectionPresenters provideCollectionPresenters(@ForMapScreen Repository repository,
                                                      @ForMapScreen PublishSubject<Boolean> subject,
                                                      @ForMapScreen LifecycleExecutorProducer executorProducer) {
-        return new CollectionPresenters(repository, subject, executorProducer);
+        return new CollectionPresenters(repository, subject, executorProducer, false);
     }
 
     @Provides

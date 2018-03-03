@@ -35,7 +35,7 @@ class CollectionScreenModule {
     CollectionPresenters provideCollectionPresenters(@ForListScreen Repository repository,
                                                      @ForListScreen PublishSubject<Boolean> subject,
                                                      @ForListScreen LifecycleExecutorProducer executorProducer) {
-        return new CollectionPresenters(repository, subject, executorProducer);
+        return new CollectionPresenters(repository, subject, executorProducer, false);
     }
 
     @Provides
