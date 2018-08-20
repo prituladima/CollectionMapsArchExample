@@ -9,7 +9,7 @@ import com.prituladima.collectionmapsarchexample.util.Logger;
 
 public final class MainApplication extends Application {
 
-    private Logger LOGGER = Logger.getLogger(MainApplication.class);
+    private final static Logger LOGGER = Logger.getLogger(MainApplication.class);
 
     private ApplicationComponent applicationComponent;
 

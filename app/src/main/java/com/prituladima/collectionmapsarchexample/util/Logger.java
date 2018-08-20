@@ -4,6 +4,8 @@ import android.util.Log;
 
 public final class Logger {
 
+    private final static boolean IS_LOGGING = false;
+
     public synchronized static Logger getLogger(Class<?> clazz) {
         return new Logger(clazz);
     }
@@ -13,16 +15,15 @@ public final class Logger {
     }
 
     private final String logTag;
-    private final boolean isLogging = true;
+
 
     public void log(String message) {
-//        if (isLogging)
-//            Log.d(logTag, message);
-        System.out.println(message);
+        if (IS_LOGGING)
+            Log.d(logTag, message);
     }
 
     public void error(Throwable message) {
-        if (isLogging)
+        if (IS_LOGGING)
             Log.e(logTag, message.toString());
     }
 
