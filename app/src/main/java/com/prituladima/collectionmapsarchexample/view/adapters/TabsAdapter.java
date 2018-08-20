@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.prituladima.collectionmapsarchexample.view.fragments.CollectionsFragment;
+import com.prituladima.collectionmapsarchexample.view.fragments.ListFragment;
 import com.prituladima.collectionmapsarchexample.view.fragments.MapsFragment;
 
 public final class TabsAdapter extends FragmentStatePagerAdapter {
@@ -15,14 +15,13 @@ public final class TabsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
         switch (position) {
             case 0:
-                return new CollectionsFragment();
+                return new ListFragment();
             case 1:
                 return new MapsFragment();
             default:
-                return new CollectionsFragment();
+                return new ListFragment();
         }
     }
 
@@ -35,7 +34,7 @@ public final class TabsAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Collections";
+                return "List";
             case 1:
                 return "Maps";
         }

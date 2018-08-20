@@ -29,9 +29,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public final class CollectionsFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
+public final class ListFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
 
-    private static final Logger LOGGER = Logger.getLogger(CollectionsFragment.class);
+    private static final Logger LOGGER = Logger.getLogger(ListFragment.class);
 
     @BindView(R.id.collection_recycler_view)
     RecyclerView collectionRecyclerView;
