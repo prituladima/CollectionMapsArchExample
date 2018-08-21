@@ -1,4 +1,3 @@
 package com.prituladima.collectionmapsarchexample.arch;
 
-public interface MVPView {
-}
+public interface MVPView {}

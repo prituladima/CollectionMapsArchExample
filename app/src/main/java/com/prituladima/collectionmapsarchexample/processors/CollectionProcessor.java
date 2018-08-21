@@ -2,18 +2,17 @@ package com.prituladima.collectionmapsarchexample.processors;
 
 public interface CollectionProcessor extends Processor {
 
-    long addInTheHead();
+  long addInTheHead();
 
-    long addInTheTail();
+  long addInTheTail();
 
-    long addInTheMiddle();
+  long addInTheMiddle();
 
-    long removeFromTheHead();
+  long removeFromTheHead();
 
-    long removeFromTheTail();
+  long removeFromTheTail();
 
-    long removeFromMiddle();
+  long removeFromMiddle();
 
-    long search();
-
+  long search();
 }

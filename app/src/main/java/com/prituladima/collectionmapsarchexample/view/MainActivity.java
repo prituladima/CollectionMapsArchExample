@@ -9,25 +9,25 @@ import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.view.adapters.TabsAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import static butterknife.ButterKnife.bind;
 
 public final class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.main_tabs)
-    TabLayout tabLayout;
+  @BindView(R.id.main_tabs)
+  TabLayout tabLayout;
 
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
+  @BindView(R.id.view_pager)
+  ViewPager viewPager;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    bind(this);
 
-        TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(tabsAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
+    TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager());
+    viewPager.setAdapter(tabsAdapter);
+    tabLayout.setupWithViewPager(viewPager);
+  }
 }

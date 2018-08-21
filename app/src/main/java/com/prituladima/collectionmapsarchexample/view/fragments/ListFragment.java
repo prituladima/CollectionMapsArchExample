@@ -3,115 +3,108 @@ package com.prituladima.collectionmapsarchexample.view.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.widget.*;
+import android.view.*;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.prituladima.collectionmapsarchexample.MainApplication;
+import com.prituladima.collectionmapsarchexample.*;
 import com.prituladima.collectionmapsarchexample.R;
 import com.prituladima.collectionmapsarchexample.anotations.ForListScreen;
 import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
 import com.prituladima.collectionmapsarchexample.entities.Cell;
 import com.prituladima.collectionmapsarchexample.presenters.CollectionPresenters;
-import com.prituladima.collectionmapsarchexample.util.Logger;
 import com.prituladima.collectionmapsarchexample.view.fragments.adapters.GridAdapter;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+import butterknife.*;
 
-public final class ListFragment extends Fragment implements CollectionScreenContractHolder.CollectionView {
+import static android.widget.Toast.*;
+import static butterknife.ButterKnife.bind;
+import static com.prituladima.collectionmapsarchexample.MainApplication.getApplicationComponent;
 
-    private static final Logger LOGGER = Logger.getLogger(ListFragment.class);
+public final class ListFragment extends Fragment
+    implements CollectionScreenContractHolder.CollectionView {
 
-    @BindView(R.id.collection_recycler_view)
-    RecyclerView collectionRecyclerView;
+  private static final Logger LOGGER = Logger.getLogger(ListFragment.class);
 
-    @BindView(R.id.amount_of_operation_textview)
-    EditText amountText;
+  @BindView(R.id.collection_recycler_view)
+  RecyclerView collectionRecyclerView;
 
-    @BindView(R.id.amount_of_par_threads_textview)
-    EditText threadsText;
+  @BindView(R.id.amount_of_operation_textview)
+  EditText amountText;
 
-    @Inject
-    @ForListScreen
-    CollectionPresenters presenter;
+  @BindView(R.id.amount_of_par_threads_textview)
+  EditText threadsText;
 
-    @Inject
-    @ForListScreen
-    GridAdapter adapter;
+  @Inject @ForListScreen CollectionPresenters presenter;
 
-    private Unbinder unbinder;
+  @Inject @ForListScreen GridAdapter adapter;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+  private Unbinder unbinder;
 
-        View rootView = inflater.inflate(R.layout.fragment_layout, container, false);
+  @Override
+  public View onCreateView(
+      LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        ((MainApplication) getActivity().getApplication()).getApplicationComponent().inject(this);
-        unbinder = ButterKnife.bind(this, rootView);
+    View rootView = inflater.inflate(R.layout.fragment_layout, container, false);
 
-        collectionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    getApplicationComponent().inject(this);
 
-        collectionRecyclerView.setAdapter(adapter);
+    unbinder = bind(this, rootView);
 
-        return rootView;
-    }
+    collectionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
+    collectionRecyclerView.setAdapter(adapter);
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        presenter.attachView(this);
-    }
+    return rootView;
+  }
 
-    @Override
-    public void onStop() {
-        presenter.detachView();
-        super.onStop();
-    }
+  @Override
+  public void onStart() {
+    super.onStart();
+    presenter.attachView(this);
+  }
 
-    @Override
-    public void onDestroyView() {
-        unbinder.unbind();
-        super.onDestroyView();
-    }
+  @Override
+  public void onStop() {
+    presenter.detachView();
+    super.onStop();
+  }
 
-    @OnClick(R.id.start_calculation)
-    public void startCalculation() {
-        int amount = Integer.parseInt(amountText.getText().toString());
-        int threads = Integer.parseInt(threadsText.getText().toString());
-        presenter.start(amount, threads);
-    }
+  @Override
+  public void onDestroyView() {
+    unbinder.unbind();
+    super.onDestroyView();
+  }
 
-    @OnClick(R.id.stop_calculation)
-    public void stopCalculation() {
-        presenter.stop();
-    }
+  @OnClick(R.id.start_calculation)
+  public void startCalculation() {
+    int amount = Integer.parseInt(amountText.getText().toString());
+    int threads = Integer.parseInt(threadsText.getText().toString());
+    presenter.start(amount, threads);
+  }
 
-    @Override
-    public void onDataSetChanged(List<Cell> list) {
-        LOGGER.log(list.toString());
-        adapter.setData(list);
-    }
+  @OnClick(R.id.stop_calculation)
+  public void stopCalculation() {
+    presenter.stop();
+  }
 
-    @Override
-    public void onDataIsStillLoadingError() {
-        Toast.makeText(getActivity(), "ListTaskType is still running!", Toast.LENGTH_SHORT).show();
-    }
+  @Override
+  public void onDataSetChanged(List<Cell> list) {
+    LOGGER.log(list.toString());
+    adapter.setData(list);
+  }
 
-    @Override
-    public void onCalculationFinished() {
-        Toast.makeText(getActivity(), "Calculation finished!", Toast.LENGTH_SHORT).show();
-    }
+  @Override
+  public void onDataIsStillLoadingError() {
+    makeText(getActivity(), "ListTaskType is still running!", LENGTH_SHORT).show();
+  }
+
+  @Override
+  public void onCalculationFinished() {
+    makeText(getActivity(), "Calculation finished!", LENGTH_SHORT).show();
+  }
 }
-

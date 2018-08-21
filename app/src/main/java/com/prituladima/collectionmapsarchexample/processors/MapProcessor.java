@@ -2,10 +2,9 @@ package com.prituladima.collectionmapsarchexample.processors;
 
 public interface MapProcessor extends Processor {
 
-    long add();
+  long add();
 
-    long search();
+  long search();
 
-    long remove();
-
+  long remove();
 }

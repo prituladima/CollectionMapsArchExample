@@ -1,11 +1,9 @@
 package com.prituladima.collectionmapsarchexample.anotations;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.*;
 
 import javax.inject.Qualifier;
 
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ForListScreen {
-}
+public @interface ForListScreen {}

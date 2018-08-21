@@ -2,10 +2,9 @@ package com.prituladima.collectionmapsarchexample.operations;
 
 public interface LifecycleExecutor {
 
-    void start();
+  void start();
 
-    void stop();
+  void stop();
 
-    boolean isRunning();
-
+  boolean isRunning();
 }

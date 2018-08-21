@@ -6,18 +6,17 @@ import java.util.List;
 
 public interface CollectionScreenContractHolder {
 
-    interface CollectionView extends MVPView {
-        void onDataSetChanged(List<Cell> list);
+  interface CollectionView extends MVPView {
+    void onDataSetChanged(List<Cell> list);
 
-        void onDataIsStillLoadingError();
+    void onDataIsStillLoadingError();
 
-        void onCalculationFinished();
-    }
+    void onCalculationFinished();
+  }
 
-    interface CollectionScreenContract {
-        void start(int amount, int threads);
+  interface CollectionScreenContract {
+    void start(int amount, int threads);
 
-        void stop();
-    }
-
+    void stop();
+  }
 }

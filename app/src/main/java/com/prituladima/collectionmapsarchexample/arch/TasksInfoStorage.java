@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface TasksInfoStorage {
 
-    List<TaskInfo> get();
-
+  List<TaskInfo> get();
 }

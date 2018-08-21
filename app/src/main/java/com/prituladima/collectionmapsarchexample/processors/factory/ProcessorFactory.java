@@ -5,6 +5,5 @@ import com.prituladima.collectionmapsarchexample.processors.Processor;
 
 public interface ProcessorFactory {
 
-    Processor getNewInstance(TaskInfo holder, int amount);
-
+  Processor getNewInstance(TaskInfo holder, int amount);
 }

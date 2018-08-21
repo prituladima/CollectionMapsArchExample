@@ -1,4 +1,3 @@
 package com.prituladima.collectionmapsarchexample.exceptions;
 
-public class NoSuchImplementationException extends RuntimeException {
-}
+public class NoSuchImplementationException extends RuntimeException {}

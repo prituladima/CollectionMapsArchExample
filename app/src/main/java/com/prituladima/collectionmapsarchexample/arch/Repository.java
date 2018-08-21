@@ -5,9 +5,9 @@ import com.prituladima.collectionmapsarchexample.entities.Cell;
 import java.util.List;
 
 public interface Repository {
-    void put(int position, long time, boolean isLoading, boolean isLast);
+  void put(int position, long time, boolean isLoading, boolean isLast);
 
-    List<Cell> get();
+  List<Cell> get();
 
-    void reset();
+  void reset();
 }
