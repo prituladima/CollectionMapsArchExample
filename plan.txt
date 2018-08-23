@@ -1,14 +1,12 @@
-
-
-- Что приложение делает?
-
-
-
-1. UX значимость
+1. UX приложения
 Реакция на действия пользователя
 Примеры использования
 
-
+*. Архитектура на бумаге
+View
+Presenter
+Repository
+Processor
 
 2. Каркас -
 - Application
@@ -16,57 +14,49 @@
 - Fragments
 - ButterKnife
 
+0. Используемые библиотеки
+Java8
+Gradle4.9
+
+Dagger2
+RxJava2
+
+JUnit5
+Robotioum2
+Mockito2
+Coverage
+
+Proguard
+Paranoid
+------------------------------------
+3. Интерфейсы приложения
+View
+Presenter
+Repository
+Processor
+LifecycleExecutor
+EventBus
+
+----------------------------------------------------------------------------------------------------
+4. TDD
+View
+Presenter
+Repository
+Processor
+LifecycleExecutor
+EventBus
 
 
+* Implementation
 
-* Design and tests
-
-
-
-*
-
-* MVP/DI/RXEventBus
-
-* IoC (Dagger 2)
-
-*
-
-
-
+* Live testing
 
 -------------------
-Описание приложения:
 
-Приложение сейчас - это пустой каркас.
-
-Ветка1
-Все нужные библитеки.
-Правильная версия градл.
-
-Ветка2
-+ Основные компоненты
-
-Ветка3
-+ таблица и кнопки
-
-Ветка4
-+ дизайн интерфесов
-+ пустые реализации
-+ тесты на реализацию
-+ заполнение пустот дл того чтобы тесты проходили
-
-
-
-Ветка
-+ UI
-
-
-
-Бонус
+#Бонус
 статический импорт по умолчанию
+лямбды
 
-
-
+#Правильное оформление Интерфейсов
 https://codelabs.developers.google.com/codelabs/android-testing/index.html
-
 
