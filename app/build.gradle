@@ -30,7 +30,7 @@ repositories {
 }
 
 spoon {
-    title = "Anagram task. Integration tests."
+    title = "Integration tests."
     baseOutputDir = "$buildDir/spoon/report-" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date())
     debug = false
     noAnimations = true
