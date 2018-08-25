@@ -3,30 +3,23 @@ package com.prituladima.collectionmapsarchexample.view.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.*;
-import android.view.*;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.prituladima.collectionmapsarchexample.*;
+import com.prituladima.collectionmapsarchexample.Logger;
 import com.prituladima.collectionmapsarchexample.R;
-import com.prituladima.collectionmapsarchexample.anotations.ForListScreen;
-import com.prituladima.collectionmapsarchexample.arch.CollectionScreenContractHolder;
-import com.prituladima.collectionmapsarchexample.entities.Cell;
-import com.prituladima.collectionmapsarchexample.presenters.CollectionPresenters;
-import com.prituladima.collectionmapsarchexample.view.fragments.adapters.GridAdapter;
 
-import java.util.List;
+import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
-import javax.inject.Inject;
-
-import butterknife.*;
-
-import static android.widget.Toast.*;
 import static butterknife.ButterKnife.bind;
-import static com.prituladima.collectionmapsarchexample.MainApplication.getApplicationComponent;
 
-public final class ListFragment extends Fragment
-    implements CollectionScreenContractHolder.CollectionView {
+public final class ListFragment extends Fragment {
 
   private static final Logger LOGGER = Logger.getLogger(ListFragment.class);
 
@@ -39,10 +32,6 @@ public final class ListFragment extends Fragment
   @BindView(R.id.amount_of_par_threads_textview)
   EditText threadsText;
 
-  @Inject @ForListScreen CollectionPresenters presenter;
-
-  @Inject @ForListScreen GridAdapter adapter;
-
   private Unbinder unbinder;
 
   @Override
@@ -51,27 +40,11 @@ public final class ListFragment extends Fragment
 
     View rootView = inflater.inflate(R.layout.fragment_layout, container, false);
 
-    getApplicationComponent().inject(this);
-
     unbinder = bind(this, rootView);
 
     collectionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-    collectionRecyclerView.setAdapter(adapter);
-
     return rootView;
-  }
-
-  @Override
-  public void onStart() {
-    super.onStart();
-    presenter.attachView(this);
-  }
-
-  @Override
-  public void onStop() {
-    presenter.detachView();
-    super.onStop();
   }
 
   @Override
@@ -84,27 +57,8 @@ public final class ListFragment extends Fragment
   public void startCalculation() {
     int amount = Integer.parseInt(amountText.getText().toString());
     int threads = Integer.parseInt(threadsText.getText().toString());
-    presenter.start(amount, threads);
   }
 
   @OnClick(R.id.stop_calculation)
-  public void stopCalculation() {
-    presenter.stop();
-  }
-
-  @Override
-  public void onDataSetChanged(List<Cell> list) {
-    LOGGER.log(list.toString());
-    adapter.setData(list);
-  }
-
-  @Override
-  public void onDataIsStillLoadingError() {
-    makeText(getActivity(), "ListTaskType is still running!", LENGTH_SHORT).show();
-  }
-
-  @Override
-  public void onCalculationFinished() {
-    makeText(getActivity(), "Calculation finished!", LENGTH_SHORT).show();
-  }
+  public void stopCalculation() {}
 }
